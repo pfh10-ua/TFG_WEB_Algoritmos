@@ -1,0 +1,13 @@
+{
+    "bubblesort": {
+        "title": "Bubble Sort",
+        "description": "Bubble Sort es un algoritmo de ordenación simple. Funciona comparando cada elemento de la lista con el siguiente, y cambiándolos de posición si están en el orden incorrecto. El proceso se repite hasta que la lista esté ordenada.",
+        "complexity": {
+            "best": "O(n)",
+            "average": "O(n^2)",
+            "worst": "O(n^2)"
+        },
+        "pathGithub": "Ordenacion/Directos/Bubblesort/"
+    }
+
+}

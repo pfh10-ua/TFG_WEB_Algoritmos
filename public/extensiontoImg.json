@@ -1,0 +1,66 @@
+{
+    "c": {
+        "image": "img/c.png",
+        "language": "C"
+    },
+    "cpp": {
+        "image": "img/cpp.webp",
+        "language": "C++"
+    },
+    "cc": {
+        "image": "img/cpp.webp",
+        "language": "C++"
+    },
+    "cxx": {
+        "image": "img/cpp.webp",
+        "language": "C++"
+    },
+    "cs": {
+        "image": "img/csharp.png",
+        "language": "C#"
+    },
+    "java": {
+        "image": "img/java.png",
+        "language": "Java"
+    },
+    "py": {
+        "image": "img/python.webp",
+        "language": "Python"
+    },
+    "js": {
+        "image": "img/javascript.png",
+        "language": "JavaScript"
+    },
+    "ts": {
+        "image": "img/typescript.png",
+        "language": "TypeScript"
+    },
+    "rb": {
+        "image": "img/ruby.png",
+        "language": "Ruby"
+    },
+    "go": {
+        "image": "img/go.png",
+        "language": "Go"
+    },
+    "rs": {
+        "image": "img/rust.png",
+        "language": "Rust"
+    },
+    "swift": {
+        "image": "img/swift.png",
+        "language": "Swift"
+    },
+    "asm": {
+        "image": "img/assembly.png",
+        "language": "Assembly"
+    },
+    "s": {
+        "image": "img/assembly.png",
+        "language": "Assembly"
+    },
+    "m": {
+        "image": "img/objectivec.png",
+        "language": "Objective-C"
+    }
+}
