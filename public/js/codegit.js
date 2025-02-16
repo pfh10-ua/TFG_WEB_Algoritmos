@@ -92,7 +92,7 @@
         }
         async cargarJsonImg() {
             try {
-                const response = await fetch('./extensiontoImg.json'); // Ruta al archivo JSON
+                const response = await fetch('../extensiontoImg.json'); // Ruta al archivo JSON
                 if (!response.ok) {
                     throw new Error(`Error al cargar JSON: ${response.statusText}`);
                 }
@@ -103,7 +103,7 @@
         }
         async cargarJsonDirectorio() {
             try {
-                const response = await fetch('./algoritmos.json'); // Ruta al archivo JSON
+                const response = await fetch('../algoritmos.json'); // Ruta al archivo JSON
                 if (!response.ok) {
                     throw new Error(`Error al cargar JSON: ${response.statusText}`);
                 }

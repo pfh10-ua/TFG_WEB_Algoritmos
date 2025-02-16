@@ -39,5 +39,8 @@ Este documento describe el funcionamiento del código del proyecto de la página
     - `DOMContentLoaded`
         - Ejecuta `init()` cuando el DOM está completamente cargado.
 
+## Despliegue
+Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
+
 ## Conclusión
 Esta documentación proporciona una visión general del funcionamiento del código del proyecto de la página web. Para más detalles, consulte los comentarios en el código fuente.

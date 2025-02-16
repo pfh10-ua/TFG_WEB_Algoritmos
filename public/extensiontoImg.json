@@ -1,34 +1,34 @@
 {
     "c": {
-        "image": "img/c.png",
+        "image": "../img/c.png",
         "language": "C"
     },
     "cpp": {
-        "image": "img/cpp.webp",
+        "image": "../img/cpp.webp",
         "language": "C++"
     },
     "cc": {
-        "image": "img/cpp.webp",
+        "image": "../img/cpp.webp",
         "language": "C++"
     },
     "cxx": {
-        "image": "img/cpp.webp",
+        "image": "../img/cpp.webp",
         "language": "C++"
     },
     "cs": {
-        "image": "img/csharp.png",
+        "image": "../img/csharp.png",
         "language": "C#"
     },
     "java": {
-        "image": "img/java.png",
+        "image": "../img/java.png",
         "language": "Java"
     },
     "py": {
-        "image": "img/python.webp",
+        "image": "../img/python.webp",
         "language": "Python"
     },
     "js": {
-        "image": "img/javascript.png",
+        "image": "../img/javascript.png",
         "language": "JavaScript"
     },
     "ts": {

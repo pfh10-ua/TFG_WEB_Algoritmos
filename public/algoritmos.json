@@ -8,6 +8,33 @@
             "worst": "O(n^2)"
         },
         "pathGithub": "Ordenacion/Directos/Bubblesort/"
+    },
+    "selectionsort": {
+        "title": "Selection Sort",
+        "description": "Selection Sort es un algoritmo de ordenación simple. Funciona encontrando el elemento más pequeño de la lista y colocándolo en la primera posición, luego encuentra el segundo elemento más pequeño y lo coloca en la segunda posición, y así sucesivamente.",
+        "complexity": {
+            "best": "O(n^2)",
+            "average": "O(n^2)",
+            "worst": "O(n^2)"
+        },
+        "pathGithub": "Ordenacion/Directos/Selectionsort/",
+        "variables": [
+            {
+            "name": "minIndex",
+            "color": "red",
+            "initialValue": 0
+            },
+            {
+            "name": "i",
+            "color": "orange",
+            "initialValue": 0
+            },
+            {
+            "name": "j",
+            "color": "yellow",
+            "initialValue": 1
+            }
+        ]
     }
 
 }

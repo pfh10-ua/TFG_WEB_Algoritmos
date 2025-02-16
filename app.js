@@ -3,7 +3,7 @@ const express = require('express');
 const atob = require('atob'); // Necesario para decodificar Base64 si no está disponible globalmente
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // convierte el cuerpo del mensaje de la petición en JSON al objeto de JavaScript req.body:
 app.use(express.json());

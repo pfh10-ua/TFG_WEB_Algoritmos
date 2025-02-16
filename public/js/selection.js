@@ -6,9 +6,10 @@ const width = 500; // Ancho total del SVG
 const height = 200; // Alto total del SVG
 const barWidth = width / data.length; // Ancho de cada barra
 
-// Variables para controlar el algoritmo Bubble Sort
-let i = 0; // Índice de la iteración externa del Bubble Sort
-let j = 0; // Índice de la iteración interna (pares comparados)
+// Variables para controlar el algoritmo Selection Sort
+let i = 0; // Índice de la iteración externa del Selection Sort
+let j = i + 1; // Índice de la iteración interna (buscando el valor mínimo)
+let minIndex = i; // Índice del valor mínimo encontrado
 let sorted = false; // Indicador de si el arreglo ya está completamente ordenado
 
 // Crear el contenedor SVG para el gráfico de barras
@@ -36,13 +37,18 @@ function renderBars() {
   // Dibujar las barras
   svg.selectAll("rect")
     .data(data) // Asignar los datos a las barras
-    .enter()
+    .enter()// Un elemento a cada dato del array
     .append("rect")
     .attr("x", (d, idx) => idx * barWidth) // Posición horizontal de cada barra
     .attr("y", d => height - d) // Posición vertical basada en el valor de la barra
     .attr("width", barWidth - 2) // Ancho de la barra (con separación)
     .attr("height", d => d) // Altura de la barra basada en el valor
-    .attr("fill", (d, idx) => (idx === j || idx === j + 1 ? "orange" : "teal")); // Resaltar las barras que se comparan
+    .attr("fill", (d, idx) => {
+      if (idx === minIndex) return "red"; // Resaltar el valor mínimo actual
+      if (idx === i) return "orange"; // Resaltar la posición actual del índice externo
+      if (idx === j) return "yellow"; // Resaltar el índice interno
+      return "teal"; // Color por defecto
+    });
 
   // Agregar etiquetas de texto para los valores
   svg.selectAll("text")
@@ -65,52 +71,62 @@ function renderBars() {
 }
 
 /**
- * Función para realizar un paso hacia adelante en el Bubble Sort
+ * Función para realizar un paso hacia adelante en el Selection Sort
  */
 function nextStep() {
   if (sorted) return; // Si ya está ordenado, no hacer nada
 
-  // Comparar y, si es necesario, intercambiar elementos adyacentes
-  if (data[j] > data[j + 1]) {
-    const temp = data[j];
-    data[j] = data[j + 1];
-    data[j + 1] = temp;
-  }
-  console.log(j);
-  // Avanzar al siguiente par de elementos
-  j++;
-  if (j >= data.length - i - 1) { // Si llegamos al final de una pasada
-    j = 0; // Reiniciar la comparación interna
-    i++; // Avanzar a la siguiente iteración externa
+  if (i >= data.length - 1) { // Si ya se completaron todas las iteraciones
+    sorted = true; // Marcar el arreglo como ordenado
+    renderBars(); // Actualizar el gráfico
+    return;
   }
 
-  // Verificar si hemos terminado de ordenar
-  if (i >= data.length - 1) {
-    sorted = true; // Marcar como ordenado
+  // Comparar y actualizar el índice del mínimo
+  if (data[j] < data[minIndex]) {
+    minIndex = j; // Actualizar el índice del mínimo encontrado
+  }
+
+  j++;
+
+  if (j === data.length) { // Si se completó la iteración interna
+    // Intercambiar los elementos data[i] y data[minIndex]
+    const temp = data[i];
+    data[i] = data[minIndex];
+    data[minIndex] = temp;
+
+    // Avanzar a la siguiente iteración externa
+    i++;
+    j = i + 1;
+    minIndex = i;
   }
 
   renderBars(); // Actualizar el gráfico
 }
 
 /**
- * Función para realizar un paso hacia atrás en el Bubble Sort
+ * Función para realizar un paso hacia atrás en el Selection Sort
  */
 function prevStep() {
-  if (i === 0 && j === 0) return; // No retroceder más allá del inicio
+  if (i === 0 && j === i + 1) return; // No retroceder más allá del inicio
 
   // Retroceder al paso anterior
-  if (j === 0) { // Si estamos al principio de una pasada
+  if (j === i + 1) { // Si estamos al principio de una pasada
     i--; // Retroceder una iteración externa
-    j = data.length - i - 2; // Posicionar al final de la iteración interna
+    j = data.length - 1; // Posicionar al final de la iteración interna
+    minIndex = i;
+
+    // Restaurar el intercambio realizado previamente
+    const temp = data[i];
+    data[i] = data[minIndex];
+    data[minIndex] = temp;
   } else {
     j--; // Retroceder al par anterior
-  }
 
-  // Deshacer el intercambio si se había hecho en el paso anterior
-  if (data[j] > data[j + 1]) {
-    const temp = data[j];
-    data[j] = data[j + 1];
-    data[j + 1] = temp;
+    // Actualizar el índice del mínimo
+    if (data[j] < data[minIndex]) {
+      minIndex = j;
+    }
   }
 
   sorted = false; // Resetear el estado de ordenado

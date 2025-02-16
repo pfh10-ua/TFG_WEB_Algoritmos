@@ -1,0 +1,58 @@
+/* Encabezado */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007BFF;
+    padding: 1rem;
+    color: white;
+}
+header a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.logo h1 {
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #fff;
+}
+
+/* Pie de Página */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #007BFF;
+    color: white;
+}
+
+.social-links{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+    text-align: center;
+}
+
+.social-links img{
+    width: 40px; height:40px;
+}
