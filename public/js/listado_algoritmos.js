@@ -9,17 +9,25 @@ async function loadAlgorithms() {
             throw new Error('No se pudo cargar la lista de algoritmos.');
         }
 
-        const algorithms = await response.json();
+        const algorithmsJSON = await response.json();
+        const algorithms = Object.values(algorithmsJSON);
         console.log(algorithms);
 
         // Generar tarjetas para cada algoritmo
         algorithms.forEach(algorithm => {
+            const complexities = algorithm.complexity;
+            console.log(complexities);
             const card = document.createElement('div');
             card.className = 'card';
 
             card.innerHTML = `
-                <h3>${algorithm.name}</h3>
+                <h3>${algorithm.title}</h3>
                 <p>${algorithm.description}</p>
+                <p><strong>Sus complejidades son:</strong></p>
+                <ul>
+                    <li>Mejor caso: ${complexities.best}</li>
+                    <li>Caso promedio: ${complexities.average}</li>
+                    <li>Peor caso: ${complexities.worst}</li>
                 <a href="${algorithm.link}" target="_blank">Ver más</a>
             `;
 
