@@ -1,3 +1,7 @@
+function formatString(str) {
+    return str.toLowerCase().replace(/\s+/g, '');
+}
+
 // Función para cargar y mostrar la lista de algoritmos
 async function loadAlgorithms() {
     const algorithmCardsContainer = document.getElementById('algorithm-cards');
@@ -15,6 +19,7 @@ async function loadAlgorithms() {
 
         // Generar tarjetas para cada algoritmo
         algorithms.forEach(algorithm => {
+            const title = formatString(algorithm.title);
             const complexities = algorithm.complexity;
             console.log(complexities);
             const card = document.createElement('div');
@@ -28,8 +33,7 @@ async function loadAlgorithms() {
                     <li>Mejor caso: ${complexities.best}</li>
                     <li>Caso promedio: ${complexities.average}</li>
                     <li>Peor caso: ${complexities.worst}</li>
-                <a href="${algorithm.link}" target="_blank">Ver más</a>
-            `;
+                <a href="showAlgorithm.html?nameAlgoritmo=${title}" target="_blank">Ver más</a>`;
 
             algorithmCardsContainer.appendChild(card);
         });

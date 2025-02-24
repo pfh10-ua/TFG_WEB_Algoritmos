@@ -82,7 +82,7 @@
                         const archivo = contentFolder[0].name; // Carga el primer archivo
                         const content = await this.getLoadFile(path, archivo);
                         this.insertarCodigo(content);
-                        this.mostrarImagenes(path, contentFolder);
+                        this.mostrarImagenes(path, contentFolder, this.algoritmo);
         
                     } catch (error) {
                         console.error('Error al procesar la carpeta o los archivos:', error);
@@ -120,6 +120,7 @@
                     throw new Error(`Error al cargar la carpeta: ${response.statusText}`);
                 }
                 const files = await response.json();
+                console.log('Archivos cargados:', files);
                 return files; // Retorna la lista de archivos
             } catch (error) {
                 console.error('Error al cargar la carpeta:', error);
@@ -141,36 +142,39 @@
             const code = this.shadowRoot.querySelector('code');
             code.textContent = codigo;
         }
-        mostrarImagenes(path, files) {
+        mostrarImagenes(path, files, nameAlgorithm) {
             const imageContainer = this.shadowRoot.querySelector('.image-container');
             imageContainer.innerHTML = ''; // Limpia las imágenes existentes
 
             files.forEach(async file => {
-                const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
+                if(fileNameWithoutExtension === nameAlgorithm.toLowerCase()){
+                    const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
 
-                if (this.extensionToImage[extension]) {
-                    const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
-                    const div = document.createElement('div');
+                    if (this.extensionToImage[extension]) {
+                        const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
+                        const div = document.createElement('div');
 
-                    const img = document.createElement('img');
-                    img.src = image;
-                    img.alt = language;
-                    img.title = `Ver contenido de ${file.name}`;
-                    img.style.maxWidth = "100px"; // Ajusta tamaño de las imágenes
-                    img.style.height = "auto";
+                        const img = document.createElement('img');
+                        img.src = image;
+                        img.alt = language;
+                        img.title = `Ver contenido de ${file.name}`;
+                        img.style.maxWidth = "100px"; // Ajusta tamaño de las imágenes
+                        img.style.height = "auto";
 
-                    const caption = document.createElement('p');
-                    caption.textContent = language; // Añade el nombre del lenguaje
+                        const caption = document.createElement('p');
+                        caption.textContent = language; // Añade el nombre del lenguaje
 
-                    // Evento para cargar el contenido del archivo al hacer clic
-                    img.addEventListener('click', async () => {
-                        const content = await this.getLoadFile(path, file.name);
-                        this.insertarCodigo(content);
-                    });
+                        // Evento para cargar el contenido del archivo al hacer clic
+                        img.addEventListener('click', async () => {
+                            const content = await this.getLoadFile(path, file.name);
+                            this.insertarCodigo(content);
+                        });
 
-                    div.appendChild(img);
-                    div.appendChild(caption);
-                    imageContainer.appendChild(div);
+                        div.appendChild(img);
+                        div.appendChild(caption);
+                        imageContainer.appendChild(div);
+                    }
                 }
             });
         }        
