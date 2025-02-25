@@ -40,6 +40,8 @@ Este documento describe el funcionamiento del código del proyecto de la página
         - Ejecuta `init()` cuando el DOM está completamente cargado.
 
 ## Despliegue
+> [!NOTE]
+> Se nececita instalar express y atob
 Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
 
 ## Conclusión
