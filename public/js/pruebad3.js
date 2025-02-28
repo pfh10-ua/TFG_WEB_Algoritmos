@@ -28,7 +28,7 @@ const statusText = d3.select(".animation")
 /**
  * Función para renderizar el gráfico de barras
  */
-function renderBars() {
+function renderGraphic() {
   // Eliminar las barras previas antes de volver a dibujar
   svg.selectAll("rect").remove();
   svg.selectAll("text").remove();
@@ -89,7 +89,7 @@ function nextStep() {
     sorted = true; // Marcar como ordenado
   }
 
-  renderBars(); // Actualizar el gráfico
+  renderGraphic(); // Actualizar el gráfico
 }
 
 /**
@@ -114,11 +114,11 @@ function prevStep() {
   }
 
   sorted = false; // Resetear el estado de ordenado
-  renderBars(); // Actualizar el gráfico
+  renderGraphic(); // Actualizar el gráfico
 }
 
 // Inicializar el gráfico con las barras
-renderBars();
+renderGraphic();
 
 // Agregar eventos a los botones
 document.getElementById("nextStep").addEventListener("click", nextStep); // Botón de avanzar

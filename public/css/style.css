@@ -9,6 +9,8 @@ main{
 }
 svg{
     background-color: #f5f1f1;
+    margin-top: 10px;
+    border: #333 1px dotted;
 }
 main h1{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -24,4 +26,12 @@ main h1{
 button:hover{
     background-color: black;
     color: white;
+}
+#description{
+    font-size: 1.2em;
+    text-align: center;
+    background-color: blueviolet;
+    color: white;
+    padding: 1px;
+    margin-top: 2px;
 }

@@ -8,7 +8,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #007BFF;
+    background-color: #0437c4;
     padding: 1rem;
     color: white;
     position: sticky;
@@ -47,7 +47,7 @@ header a{
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #007BFF;
+    background-color: #0437c4;
     color: white;
 }
 
