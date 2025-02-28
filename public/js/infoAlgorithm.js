@@ -199,7 +199,7 @@ function mostrarError(){
 }
 
 async function init(){
-    const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
+	const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
     let description = "";
 	let path = "";
 	let nextStepFunction = new Function();
@@ -207,7 +207,7 @@ async function init(){
     
   	try {
     	algorithmsData = await cargarJsonDirectorio();
-		console.log(algorithmsData);
+		  console.log(algorithmsData);
         if (algorithmsData[name]) {
         	const selectedAlgorithm = algorithmsData[name];
 			path = selectedAlgorithm.pathGithub;
