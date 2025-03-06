@@ -8,7 +8,7 @@ main{
     margin: 1%;
 }
 svg{
-    background-color: #f5f1f1;
+    background-color: #f0ebeb;
     margin-top: 10px;
     border: #333 1px dotted;
 }
@@ -29,9 +29,10 @@ button:hover{
 }
 #description{
     font-size: 1.2em;
-    text-align: center;
+    text-align: justify;
     background-color: blueviolet;
     color: white;
     padding: 1px;
-    margin-top: 2px;
+    margin: 2px auto;
+    max-width: 100ch;
 }
