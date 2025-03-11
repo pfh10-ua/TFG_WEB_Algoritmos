@@ -7,19 +7,7 @@
             "average": "O(n^2)",
             "worst": "O(n^2)"
         },
-        "pathGithub": "Ordenacion/Directos/Bubblesort/",
-        "variables": [
-            {
-            "name": "i",
-            "color": "orange",
-            "initialValue": 0
-            },
-            {
-            "name": "j",
-            "color": "yellow",
-            "initialValue": 1
-            }
-        ]
+        "pathGithub": "Ordenacion/Directos/Bubblesort/"
     },
     "selectionsort": {
         "title": "Selection Sort",
@@ -29,24 +17,7 @@
             "average": "O(n^2)",
             "worst": "O(n^2)"
         },
-        "pathGithub": "Ordenacion/Directos/Selectionsort/",
-        "variables": [
-            {
-            "name": "minIndex",
-            "color": "red",
-            "initialValue": 0
-            },
-            {
-            "name": "i",
-            "color": "orange",
-            "initialValue": 0
-            },
-            {
-            "name": "j",
-            "color": "yellow",
-            "initialValue": 1
-            }
-        ]
+        "pathGithub": "Ordenacion/Directos/Selectionsort/"
     }
 
 }
