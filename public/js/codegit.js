@@ -1,3 +1,5 @@
+import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from './dataLoader.js';
+
 (()=> {
     const element = document.createElement("template");
     element.innerHTML = `
@@ -54,7 +56,7 @@
         }
         async connectedCallback() {   
             this.algoritmo = this.hasAttribute('data-algoritmo') ? this.getAttribute('data-algoritmo') : 0;
-            await this.cargarJsonImg(); // Cargar el JSON al iniciar el componente
+            this.extensionToImage = await cargarJsonImg(); // Cargar el JSON al iniciar el componente
            
         }
         async attributeChangedCallback(name, viejo, nuevo){
@@ -65,24 +67,25 @@
                     try {
                         // Carga la carpeta
                         if (Object.keys(this.directorios).length === 0) {
-                            this.directorios = await this.cargarJsonDirectorio();
+                            this.directorios = await cargarJsonDirectorio();
                         }
                         const algoritmoData = this.directorios[this.algoritmo];
                         if (!algoritmoData) {
                             throw new Error(`El algoritmo "${this.algoritmo}" no existe en el JSON.`);
                         }
                         const path = algoritmoData.pathGithub;
-                        const contentFolder = await this.getLoadFolder(path);
+                        const contentFolder = await getLoadFolder(path);
                         // Validar que contentFolder no esté vacío
                         if (!contentFolder || contentFolder.length === 0) {
                             console.error('La carpeta está vacía o no se pudo cargar.');
                             return; // Terminar la ejecución si no hay contenido
                         }
                         // Continuar si hay contenido
-                        const archivo = contentFolder[0].name; // Carga el primer archivo
-                        const content = await this.getLoadFile(path, archivo);
+                        const archivosCoincidentes = contentFolder.filter(file => file.name.toLowerCase().includes(this.algoritmo.toLowerCase()));
+                        const archivo = archivosCoincidentes[0].name;
+                        const content = await getLoadFile(path, archivo);
                         this.insertarCodigo(content);
-                        this.mostrarImagenes(path, contentFolder);
+                        this.mostrarImagenes(path, contentFolder, this.algoritmo);
         
                     } catch (error) {
                         console.error('Error al procesar la carpeta o los archivos:', error);
@@ -90,87 +93,46 @@
                 }
             }
         }
-        async cargarJsonImg() {
-            try {
-                const response = await fetch('../extensiontoImg.json'); // Ruta al archivo JSON
-                if (!response.ok) {
-                    throw new Error(`Error al cargar JSON: ${response.statusText}`);
-                }
-                this.extensionToImage = await response.json();
-            } catch (error) {
-                console.error("Error al cargar el archivo JSON:", error);
-            }
-        }
-        async cargarJsonDirectorio() {
-            try {
-                const response = await fetch('../algoritmos.json'); // Ruta al archivo JSON
-                if (!response.ok) {
-                    throw new Error(`Error al cargar JSON: ${response.statusText}`);
-                }
-                this.directorios = await response.json();
-                return this.directorios;
-            } catch (error) {
-                console.error("Error al cargar el archivo JSON:", error);
-            }
-        }
-        async getLoadFolder(nameAlgoritm) {
-            try {
-                const response = await fetch(`/load-folder?algoritmo=${nameAlgoritm}`);
-                if (!response.ok) {
-                    throw new Error(`Error al cargar la carpeta: ${response.statusText}`);
-                }
-                const files = await response.json();
-                return files; // Retorna la lista de archivos
-            } catch (error) {
-                console.error('Error al cargar la carpeta:', error);
-            }
-        }
-        async getLoadFile(ruta, archivo) {
-            try {
-                const response = await fetch(`/load-file?ruta=${ruta}&archivo=${archivo}`);
-                if (!response.ok) {
-                    throw new Error(`Error al cargar el archivo: ${response.statusText}`);
-                }
-                const data = await response.json();
-                return data.content;
-            } catch (error) {
-                console.error('Error al cargar el archivo:', error);
-            }
-        }
         insertarCodigo(codigo){
             const code = this.shadowRoot.querySelector('code');
             code.textContent = codigo;
         }
-        mostrarImagenes(path, files) {
+        mostrarImagenes(path, files, nameAlgorithm) {
             const imageContainer = this.shadowRoot.querySelector('.image-container');
             imageContainer.innerHTML = ''; // Limpia las imágenes existentes
 
             files.forEach(async file => {
-                const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
+                if(fileNameWithoutExtension === nameAlgorithm.toLowerCase()){
+                    const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                    console.log(extension);
+                    console.log(this.extensionToImage);
 
-                if (this.extensionToImage[extension]) {
-                    const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
-                    const div = document.createElement('div');
+                    if (this.extensionToImage[extension]) {
+                        const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
+                        const div = document.createElement('div');
 
-                    const img = document.createElement('img');
-                    img.src = image;
-                    img.alt = language;
-                    img.title = `Ver contenido de ${file.name}`;
-                    img.style.maxWidth = "100px"; // Ajusta tamaño de las imágenes
-                    img.style.height = "auto";
+                        const img = document.createElement('img');
+                        img.src = image;
+                        img.alt = language;
+                        img.title = `Ver contenido de ${file.name}`;
+                        img.style.maxWidth = "100px"; // Ajusta tamaño de las imágenes
+                        img.style.height = "auto";
 
-                    const caption = document.createElement('p');
-                    caption.textContent = language; // Añade el nombre del lenguaje
+                        const caption = document.createElement('p');
+                        caption.textContent = language; // Añade el nombre del lenguaje
+                        console.log(language);
 
-                    // Evento para cargar el contenido del archivo al hacer clic
-                    img.addEventListener('click', async () => {
-                        const content = await this.getLoadFile(path, file.name);
-                        this.insertarCodigo(content);
-                    });
+                        // Evento para cargar el contenido del archivo al hacer clic
+                        img.addEventListener('click', async () => {
+                            const content = await getLoadFile(path, file.name);
+                            this.insertarCodigo(content);
+                        });
 
-                    div.appendChild(img);
-                    div.appendChild(caption);
-                    imageContainer.appendChild(div);
+                        div.appendChild(img);
+                        div.appendChild(caption);
+                        imageContainer.appendChild(div);
+                    }
                 }
             });
         }        

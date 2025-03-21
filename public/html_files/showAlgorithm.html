@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Algoritmos - Algoritmus Petrus</title>
+    <title>Algoritmus Petrus</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Librería D3.js para gráficos -->
+    <script type="module" src="../js/infoAlgorithm.js" defer></script> <!-- Script para cargar la gráfica de un algoritmo -->
+    <script type="module" src="../js/codegit.js"></script> <!-- Script para cargar el código de un algoritmo -->
     <link rel="stylesheet" href="../css/comun.css">
-    <link rel="stylesheet" href="../css/principal.css">
-    <!-- Script JavaScript -->
-    <script src="../js/listado_algoritmos.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/favicon-96x96.png">
 </head>
 <body>
     <!-- Encabezado -->
@@ -20,21 +22,22 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="../index.html">Inicio</a></li>
-                <li><a href="about.html">Sobre Nosotros</a></li>
-                <li><a href="./algoritms.html">Algoritmos</a></li>
-                <li><a href="contact.html">Contacto</a></li>
+                <li><a href="#about">Sobre Nosotros</a></li>
+                <li><a href="algoritms.html">Algoritmos</a></li>
+                <li><a href="#contact">Contacto</a></li>
             </ul>
         </nav>
     </header>
-
-    <!-- Sección de Lista de Algoritmos -->
-    <section id="algorithm-list" class="algorithms">
-        <h2>Lista de Algoritmos</h2>
-        <div id="algorithm-cards" class="algorithm-cards"></div>
-    </section>
-
-    <!-- Pie de Página -->
-    <footer id="contact">
+    <main>
+        <div class="animation">
+            <div id="chart"></div> <!-- Contenedor para el gráfico -->
+            <div style="margin-top: 20px;">
+                <button id="restart">⟳ Reiniciar</button>
+                <button id="nextStep">⏭ Paso Siguiente</button>
+            </div>
+        </div>
+    </main>
+    <footer>
         <p>Algoritmus Petrus <span>Creado por Pedro Francés Hernández </span>&copy; 2024-25</p>
         <div class="social-links">
             <!-- Enlace a GitHub -->

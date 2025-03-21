@@ -1,11 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* Encabezado */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #007BFF;
+    background-color: #0437c4;
     padding: 1rem;
     color: white;
+    position: sticky;
+    top: 0;
 }
 header a{
     color: white;
@@ -40,7 +47,7 @@ header a{
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #007BFF;
+    background-color: #0437c4;
     color: white;
 }
 
