@@ -33,14 +33,12 @@ Este documento describe el funcionamiento del código del proyecto de la página
 - **Funciones**
     - `init()`
         - Inicializa los eventos y configuraciones de la página.
-    - `handleClick()`
-        - Maneja los eventos de clic en la página.
 - **Eventos**
     - `DOMContentLoaded`
         - Ejecuta `init()` cuando el DOM está completamente cargado.
 
 ## Despliegue
-Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
+Para realizar el despliegue debemos de ejecutar node --env-file .env app.js y tener la versión >= 20;
 
 ## Conclusión
 Esta documentación proporciona una visión general del funcionamiento del código del proyecto de la página web. Para más detalles, consulte los comentarios en el código fuente.
