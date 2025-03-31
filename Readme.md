@@ -7,6 +7,41 @@ Este documento describe el funcionamiento del código del proyecto de la página
 Todo está contenido en la carpeta public
 - **index.html**
     - Contiene la estructura principal de la página web.
+<<<<<<< HEAD
+- **styles.css**
+    - Define los estilos y el diseño de la página web.
+- **script.js**
+    - Contiene la lógica y las interacciones de la página web.
+
+## index.html
+- **Header**
+    - Contiene el título y la navegación principal.
+- **Main**
+    - Sección principal con el contenido de la página.
+- **Footer**
+    - Información de contacto y enlaces adicionales.
+
+## styles.css
+- **Body**
+    - Define el estilo general del cuerpo de la página.
+- **Header**
+    - Estilos específicos para el encabezado.
+- **Main**
+    - Estilos para la sección principal.
+- **Footer**
+    - Estilos para el pie de página.
+
+## script.js
+- **Funciones**
+    - `init()`
+        - Inicializa los eventos y configuraciones de la página.
+- **Eventos**
+    - `DOMContentLoaded`
+        - Ejecuta `init()` cuando el DOM está completamente cargado.
+
+## Despliegue
+Para realizar el despliegue debemos de ejecutar node --env-file .env app.js y tener la versión >= 20;
+=======
 - **app.js**
     - Contiene las peticiones a la API de github mediante una API interna.
 - **algoritmos.json**
@@ -27,5 +62,6 @@ Todo está contenido en la carpeta public
 > Se nececita instalar express y atob. Además la versión de node debe ser superior a la 20 para ejecutar el siguiente comando y no depender de dotenv
 
 Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
+>>>>>>> 8ef7e692d40a16f68e4885add214869905fb6aa8
 
 
