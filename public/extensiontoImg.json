@@ -16,11 +16,11 @@
         "language": "C++"
     },
     "cs": {
-        "image": "../img/csharp.png",
+        "image": "../img/csharp.webp",
         "language": "C#"
     },
     "java": {
-        "image": "../img/java.png",
+        "image": "../img/java.webp",
         "language": "Java"
     },
     "py": {
@@ -28,39 +28,39 @@
         "language": "Python"
     },
     "js": {
-        "image": "../img/javascript.png",
+        "image": "../img/javascript.webp",
         "language": "JavaScript"
     },
     "ts": {
-        "image": "img/typescript.png",
+        "image": "../img/typescript.webp",
         "language": "TypeScript"
     },
     "rb": {
-        "image": "img/ruby.png",
+        "image": "../img/ruby.webp",
         "language": "Ruby"
     },
     "go": {
-        "image": "img/go.png",
+        "image": "../img/go.webp",
         "language": "Go"
     },
     "rs": {
-        "image": "img/rust.png",
+        "image": "../img/rust.webp",
         "language": "Rust"
     },
     "swift": {
-        "image": "img/swift.png",
+        "image": "../img/swift.png",
         "language": "Swift"
     },
     "asm": {
-        "image": "img/assembly.png",
+        "image": "../img/assembly.webp",
         "language": "Assembly"
     },
     "s": {
-        "image": "img/assembly.png",
+        "image": "../img/assembly.webp",
         "language": "Assembly"
     },
     "m": {
-        "image": "img/objectivec.png",
+        "image": "../img/objectivec.webp",
         "language": "Objective-C"
     }
 }

@@ -18,6 +18,16 @@
             "worst": "O(n^2)"
         },
         "pathGithub": "Ordenacion/Directos/Selectionsort/"
+    },
+    "secuencial": {
+        "title": "Secuencial",
+        "description": "La búsqueda secuencial es un algoritmo simple que recorre una lista de elementos en busca de un valor específico. Comienza en el primer elemento de la lista y se mueve uno por uno hasta encontrar el valor deseado o llegar al final de la lista.",
+        "complexity": {
+            "best": "O(1)",
+            "average": "O(n)",
+            "worst": "O(n)"
+        },
+        "pathGithub": "Búsqueda/Secuencial/"
     }
 
 }
