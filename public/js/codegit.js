@@ -95,7 +95,9 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
         }
         insertarCodigo(codigo){
             const code = this.shadowRoot.querySelector('code');
-            code.textContent = codigo;
+            const codigoConDivs = codigo.split('\n').map((linea, index) => `<div>${index + 1}: ${linea}</div>`).join('');
+            code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML
+            // code.textContent = codigo;
         }
         mostrarImagenes(path, files, nameAlgorithm) {
             const imageContainer = this.shadowRoot.querySelector('.image-container');
