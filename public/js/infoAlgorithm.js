@@ -98,17 +98,6 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 //   renderGraphic(); // Actualizar el gráfico
 // }
 
-/**
- * Función para resetear los datos y reiniciar el algoritmo
- */
-function restartSteps(variables, copiaVariables) {
-	Object.assign(variables, copiaVariables); // Restaurar los datos originales
-//   variables.data = copiaVariables // Restaurar los datos originales
-//   varia = Object.assign({}, copiaGlobalVariables); // Restaurar las variables originales
-
-//   sorted = false; // Resetear el estado de ordenado
-  renderGraphic(variables, ); // Actualizar el gráfico
-}
 
 
 function insertAsLastChild(padre,nuevoHijo){
@@ -167,12 +156,62 @@ function mostrarError(){
 	}
 }
 
+function compruebaTraza(trazas, nombreFichero){
+	const extension = nombreFichero.substring(nombreFichero.lastIndexOf('.') + 1).toLowerCase();
+	return trazas[extension];
+}
+
+function quitarResaltado(lineas){
+	lineas.forEach(linea => {
+		if (linea.classList.contains("highlight")) {
+			linea.classList.remove("highlight");
+		}
+	});
+}
+
+function resaltarActuales(lineas, traza, veces){
+	lineas.forEach(linea => {
+		const lineNumber = linea.querySelector("span").textContent;
+		if (Array.isArray(traza[veces])) {
+			for(let i = 0; i < traza[veces].length; i++){
+				if (lineNumber == traza[veces][i] + "|") {
+					linea.classList.add("highlight");
+				}
+			}
+		} else {
+			if (lineNumber == traza[veces] + "|") {
+				linea.classList.add("highlight");
+			}
+		}
+	});
+
+}
+
+function seleccionaLinea(trazas, veces){
+	const codeElement = document.querySelector("code-git[data-algoritmo]");
+	const nombreFicheroGit = codeElement.shadowRoot.querySelector("div").textContent;
+	const codeGit = codeElement.shadowRoot.querySelector("code");
+	const lineas = codeGit.querySelectorAll("div");
+	const existeTraza = compruebaTraza(trazas, nombreFicheroGit);
+	if (existeTraza){
+		quitarResaltado(lineas);
+		resaltarActuales(lineas, existeTraza, veces);
+		
+	}
+	else{
+		alert("No existe traza para este codigo");
+	}
+	
+}
+
+
 async function init(){
 	// Variable para almacenar los datos del archivo JSON
 	let algorithmsData = {};
 	const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
 	let description = "";
 	let path = "";
+	let veces = 0;
 	// Cargar los datos del archivo JSON
 	
   	try {
@@ -212,7 +251,7 @@ async function init(){
 
 			const {variables, nextstep} = module.exports; // Extraer las variables y la función de nextStep
 			console.log(variables);
-			const copiaVariables = {...variables} // Copia de las variables de manera superficial
+			const copiaVariables = structuredClone(variables); // Copia de las variables de manera superficial
 			// Dimensiones del gráfico
 			const width = 500; // Ancho total del SVG
 			const height = 200; // Alto total del SVG
@@ -236,12 +275,15 @@ async function init(){
 			// Agregar eventos a los botones
 			document.getElementById("nextStep").addEventListener("click", () => {
 				nextstep.call(module.exports);
+				if(variables.trazas){seleccionaLinea(variables.trazas, veces);}
+				veces++;
 				renderGraphic(variables, svg, height, barWidth, statusText);
 			}); // Botón de avanzar
-			document.getElementById("restart").addEventListener("click", () => {
-				restartSteps(variables, copiaVariables)
-				renderGraphic(variables, svg, height, barWidth, statusText);
-			}); // Botón de retroceder
+			document.getElementById("restart").addEventListener("click", () => { // Botón de reiniciar
+				Object.assign(variables, structuredClone(copiaVariables)); // Restaurar los datos originales completamente
+				veces = 0; // Reiniciar el contador de pasos
+				renderGraphic(variables, svg, height, barWidth, statusText); // Volver a renderizar el gráfico
+			}); 
 		}
 		else{
 			mostrarError();
@@ -250,13 +292,7 @@ async function init(){
 	}
 	// Cargar el código del algoritmo
 	renderCódigo({nameAlgoritmo: name});
-	
-
-
-	//TODO cambiar el evento a esto para que no se pueda acceder a las variables: 
-	// 	button.addEventListener("click", () => {
-	//		miFuncionConParametros("Hola", 42);  // Pasando parámetros
-	//	});
+	// seleccionaLinea(variables.trazas, veces);
 }
 
 

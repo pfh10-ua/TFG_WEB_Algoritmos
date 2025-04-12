@@ -16,6 +16,23 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
             word-wrap: break-word; /* Ajusta las palabras si son muy largas */
             font-family: monospace; /* Asegura un estilo adecuado para código */
         }
+        .numero-linea {
+            display: inline-block;
+            width: 3ch; /* Ajusta a 2ch, 3ch o más si hay muchas líneas */
+            color: gray;
+            text-align: right;
+            margin-right: 0.5ch;
+            font-family: monospace;
+        }
+        code{
+            font-family: monospace;
+            white-space: pre;
+        }
+        .highlight {
+            background-color: #ffff00; /* Bright yellow */
+            color: #000000; /* Black text */
+            font-weight: bold; /* Optional: Make the text bold for better emphasis */
+        }
         .image-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Diseño responsive */
@@ -84,7 +101,7 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                         const archivosCoincidentes = contentFolder.filter(file => file.name.toLowerCase().includes(this.algoritmo.toLowerCase()));
                         const archivo = archivosCoincidentes[0].name;
                         const content = await getLoadFile(path, archivo);
-                        this.insertarCodigo(content);
+                        this.insertarCodigo(content, archivo);
                         this.mostrarImagenes(path, contentFolder, this.algoritmo);
         
                     } catch (error) {
@@ -93,13 +110,24 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                 }
             }
         }
-        insertarCodigo(codigo){
+        insertarCodigo(codigo, archivo){
             const code = this.shadowRoot.querySelector('code');
-            const codigoConDivs = codigo.split('\n').map((linea, index) => `<div>${index + 1}: ${linea}</div>`).join('');
+            const lineas = codigo.split('\n');
+            const maxDigitos = String(lineas.length).length; // Calcula el número máximo de dígitos
+            const codigoConDivs = lineas.map((linea, index) =>{
+                const numeroLinea = String(index + 1).padStart(maxDigitos, '');
+                 return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); // Añade un div por cada línea
             code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML
             // code.textContent = codigo;
+            const titulo = document.createElement('div');
+            titulo.textContent = `${archivo}`; // Crea un nuevo div con el nombre del archivo
+            titulo.style.fontWeight = "bold"; // Estilo para el nombre del archivo
+            titulo.style.marginBottom = "10px"; // Espacio entre el nombre del archivo y el código
+            titulo.style.color = "#00ff00"; // Color verde para el nombre del archivo
+            const pre = this.shadowRoot.querySelector('pre');
+            pre.insertBefore(titulo, pre.firstChild); // Inserta el div como primer hijo del <code>
         }
-        mostrarImagenes(path, files, nameAlgorithm) {
+        mostrarImagenes(path, files, nameAlgorithm){
             const imageContainer = this.shadowRoot.querySelector('.image-container');
             imageContainer.innerHTML = ''; // Limpia las imágenes existentes
 
@@ -128,7 +156,7 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                         // Evento para cargar el contenido del archivo al hacer clic
                         img.addEventListener('click', async () => {
                             const content = await getLoadFile(path, file.name);
-                            this.insertarCodigo(content);
+                            this.insertarCodigo(content, file.name);
                         });
 
                         div.appendChild(img);
