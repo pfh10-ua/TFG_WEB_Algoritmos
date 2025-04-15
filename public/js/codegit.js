@@ -16,6 +16,11 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
             word-wrap: break-word; /* Ajusta las palabras si son muy largas */
             font-family: monospace; /* Asegura un estilo adecuado para código */
         }
+        #titulo-archivo{
+            font-weight: bold; /* Estilo para el nombre del archivo */
+            margin-bottom: 10px; /* Espacio entre el nombre del archivo y el código */
+            color: #00ff00; /* Color verde para el nombre del archivo */
+        }
         .numero-linea {
             display: inline-block;
             width: 3ch; /* Ajusta a 2ch, 3ch o más si hay muchas líneas */
@@ -24,7 +29,7 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
             margin-right: 0.5ch;
             font-family: monospace;
         }
-        code{
+        code {
             font-family: monospace;
             white-space: pre;
         }
@@ -113,19 +118,23 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
         insertarCodigo(codigo, archivo){
             const code = this.shadowRoot.querySelector('code');
             const lineas = codigo.split('\n');
-            const maxDigitos = String(lineas.length).length; // Calcula el número máximo de dígitos
             const codigoConDivs = lineas.map((linea, index) =>{
-                const numeroLinea = String(index + 1).padStart(maxDigitos, '');
                  return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); // Añade un div por cada línea
             code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML
             // code.textContent = codigo;
             const titulo = document.createElement('div');
+            titulo.id = "titulo-archivo"; // Asigna un id al título
             titulo.textContent = `${archivo}`; // Crea un nuevo div con el nombre del archivo
-            titulo.style.fontWeight = "bold"; // Estilo para el nombre del archivo
-            titulo.style.marginBottom = "10px"; // Espacio entre el nombre del archivo y el código
-            titulo.style.color = "#00ff00"; // Color verde para el nombre del archivo
+            // titulo.style.fontWeight = "bold"; // Estilo para el nombre del archivo
+            // titulo.style.marginBottom = "10px"; // Espacio entre el nombre del archivo y el código
+            // titulo.style.color = "#00ff00"; // Color verde para el nombre del archivo
             const pre = this.shadowRoot.querySelector('pre');
-            pre.insertBefore(titulo, pre.firstChild); // Inserta el div como primer hijo del <code>
+            const existingTitle = this.shadowRoot.querySelector('#titulo-archivo'); // Busca el div existente
+            if (existingTitle) {
+                pre.removeChild(existingTitle); // Elimina el div existente si lo encuentra
+            }
+            // Añade el nuevo div al principio del <code>
+            pre.insertBefore(titulo, pre.firstChild);
         }
         mostrarImagenes(path, files, nameAlgorithm){
             const imageContainer = this.shadowRoot.querySelector('.image-container');
@@ -135,8 +144,8 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                 const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
                 if(fileNameWithoutExtension === nameAlgorithm.toLowerCase()){
                     const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-                    console.log(extension);
-                    console.log(this.extensionToImage);
+                    // console.log(extension);
+                    // console.log(this.extensionToImage);
 
                     if (this.extensionToImage[extension]) {
                         const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
@@ -151,7 +160,7 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
 
                         const caption = document.createElement('p');
                         caption.textContent = language; // Añade el nombre del lenguaje
-                        console.log(language);
+                        //console.log(language);
 
                         // Evento para cargar el contenido del archivo al hacer clic
                         img.addEventListener('click', async () => {
