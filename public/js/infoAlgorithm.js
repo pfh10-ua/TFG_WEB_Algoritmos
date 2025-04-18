@@ -108,10 +108,9 @@ function insertAsFirstChild(padre,nuevoHijo){
 	padre.prepend(nuevoHijo);
 }
 
-function renderCódigo(data) {
-	let nameAlgoritmo = data.nameAlgoritmo;
+function renderCódigo(nombre) {
 	let bloquecódigo = document.createElement("section");
-	bloquecódigo.innerHTML = "<code-git data-algoritmo='"+nameAlgoritmo+"'></code-git>";
+	bloquecódigo.innerHTML = "<code-git data-algoritmo='"+nombre+"'></code-git>";
 		
 	insertAsLastChild(document.querySelector("main"), bloquecódigo);
 	return bloquecódigo;
@@ -156,9 +155,12 @@ function mostrarError(){
 	}
 }
 
-function compruebaTraza(trazas, nombreFichero){
-	const extension = nombreFichero.substring(nombreFichero.lastIndexOf('.') + 1).toLowerCase();
-	return trazas[extension];
+let globalLanguage = ""; // Variable global para almacenar el lenguaje
+
+function consigueExtension(){
+	const codeElement = document.querySelector("code-git[data-algoritmo]");
+	const nombreFichero = codeElement.shadowRoot.querySelector("div").textContent;
+	globalLanguage = nombreFichero.substring(nombreFichero.lastIndexOf('.') + 1).toLowerCase();
 }
 
 function quitarResaltado(lineas){
@@ -169,39 +171,29 @@ function quitarResaltado(lineas){
 	});
 }
 
-function resaltarActuales(lineas, traza, veces){
+function resaltarActuales(lineas, lineaActuales){
 	lineas.forEach(linea => {
 		const lineNumber = linea.querySelector("span").textContent;
-		if (Array.isArray(traza[veces])) {
-			for(let i = 0; i < traza[veces].length; i++){
-				if (lineNumber == traza[veces][i] + "|") {
+		if (Array.isArray(lineaActuales)) {
+			for(let i = 0; i < lineaActuales.length; i++){
+				if (lineNumber == lineaActuales[i] + "|") {
 					linea.classList.add("highlight");
 				}
 			}
 		} else {
-			if (lineNumber == traza[veces] + "|") {
+			if (lineNumber == lineaActuales + "|") {
 				linea.classList.add("highlight");
 			}
 		}
 	});
-
 }
 
-function seleccionaLinea(trazas, veces){
+function seleccionaLinea(lineasDestacadas){
 	const codeElement = document.querySelector("code-git[data-algoritmo]");
-	const nombreFicheroGit = codeElement.shadowRoot.querySelector("div").textContent;
 	const codeGit = codeElement.shadowRoot.querySelector("code");
 	const lineas = codeGit.querySelectorAll("div");
-	const existeTraza = compruebaTraza(trazas, nombreFicheroGit);
-	if (existeTraza){
-		quitarResaltado(lineas);
-		resaltarActuales(lineas, existeTraza, veces);
-		
-	}
-	else{
-		alert("No existe traza para este codigo");
-	}
-	
+	quitarResaltado(lineas);
+	resaltarActuales(lineas, lineasDestacadas);
 }
 
 
@@ -211,7 +203,7 @@ async function init(){
 	const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
 	let description = "";
 	let path = "";
-	let veces = 0;
+	let variablesObtenidas;
 	// Cargar los datos del archivo JSON
 	
   	try {
@@ -250,7 +242,7 @@ async function init(){
 			new Function("module", content)(module); // Ejecutar el código del módulo
 
 			const {variables, nextstep} = module.exports; // Extraer las variables y la función de nextStep
-			console.log(variables);
+			variablesObtenidas = variables.lineaActual; // Guardar las líneas iniciales
 			const copiaVariables = structuredClone(variables); // Copia de las variables de manera superficial
 			// Dimensiones del gráfico
 			const width = 500; // Ancho total del SVG
@@ -274,25 +266,33 @@ async function init(){
 			renderGraphic(variables, svg, height, barWidth, statusText);
 			// Agregar eventos a los botones
 			document.getElementById("nextStep").addEventListener("click", () => {
+				consigueExtension();
+				variables.language = globalLanguage;
 				nextstep.call(module.exports);
-				if(variables.trazas){seleccionaLinea(variables.trazas, veces);}
-				veces++;
+				if (variables.lineaActual[globalLanguage]){
+					seleccionaLinea(variables.lineaActual[globalLanguage]);
+				}
+				//if(variables.lineaActual){seleccionaLinea(variables.lineaActual, variables.language);}
 				renderGraphic(variables, svg, height, barWidth, statusText);
 			}); // Botón de avanzar
 			document.getElementById("restart").addEventListener("click", () => { // Botón de reiniciar
 				Object.assign(variables, structuredClone(copiaVariables)); // Restaurar los datos originales completamente
-				veces = 0; // Reiniciar el contador de pasos
+				consigueExtension();
+				variables.language = globalLanguage;
+				if (variables.lineaActual[globalLanguage]){
+					seleccionaLinea(variables.lineaActual[globalLanguage]);
+				}
 				renderGraphic(variables, svg, height, barWidth, statusText); // Volver a renderizar el gráfico
 			}); 
 		}
 		else{
 			mostrarError();
 		}
+	
 		
-	}
 	// Cargar el código del algoritmo
-	renderCódigo({nameAlgoritmo: name});
-	// seleccionaLinea(variables.trazas, veces);
+	renderCódigo(name);
+	}
 }
 
 
