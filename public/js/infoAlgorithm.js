@@ -204,6 +204,15 @@ async function init(){
 	let description = "";
 	let path = "";
 	let variablesObtenidas;
+
+	const menuToggle = document.getElementById("menuToggle");
+	const navLinks = document.querySelector("ul.nav-links");
+
+	//Menú desplegable en dispositivos móviles
+	menuToggle.addEventListener("click", () => {
+		navLinks.classList.toggle("active");
+	});
+
 	// Cargar los datos del archivo JSON
 	
   	try {
@@ -252,8 +261,10 @@ async function init(){
 			// Crear el contenedor SVG para el gráfico de barras
 			const svg = d3.select("#chart")
 				.append("svg")
-				.attr("width", width) // Ancho del SVG
-				.attr("height", height); // Alto del SVG
+				.attr("width", "100%") // Ancho del SVG
+				.attr("height", height) // Alto del SVG
+				.attr("viewBox", `0 0 ${width} ${height}`)
+  				.attr("preserveAspectRatio", "xMidYMid meet");
 
 			// Crear un texto para mostrar el estado del ordenamiento
 			const statusText = d3.select(".animation")

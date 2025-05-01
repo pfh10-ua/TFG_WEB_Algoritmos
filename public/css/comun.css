@@ -13,6 +13,7 @@ header {
     color: white;
     position: sticky;
     top: 0;
+    z-index: 999; /* Por encima de otros elementos */
 }
 header a{
     color: white;
@@ -41,6 +42,48 @@ header a{
 .nav-links a:hover {
     color: #fff;
     text-shadow: 0 0 5px #fff;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    position: absolute; /* Posicionamiento absoluto respecto al header */
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000; /* Asegura que el botón esté sobre el contenido */
+}
+
+.menu-toggle div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #0437c4;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
 }
 
 /* Pie de Página */
