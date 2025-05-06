@@ -26,8 +26,8 @@
             <ul class="nav-links">
                 <li><a href="../index.html">Inicio</a></li>
                 <li><a href="about.html">Sobre Nosotros</a></li>
-                <li><a href="./algoritms.html">Algoritmos</a></li>
-                <li><a href="contact.html">Contacto</a></li>
+                <li><a href="algoritms.html">Algoritmos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
             </ul>
         </nav>
     </header>
@@ -35,6 +35,9 @@
     <!-- Sección de Lista de Algoritmos -->
     <section id="algorithm-list" class="algorithms">
         <h2>Lista de Algoritmos</h2>
+        <div class="search-bar"></div>
+            <input type="text" id="searchInput" placeholder="Buscar algoritmo..." onkeyup="filterAlgorithms()">
+        </div>
         <div id="algorithm-cards" class="algorithm-cards"></div>
     </section>
 

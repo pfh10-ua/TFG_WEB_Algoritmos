@@ -6,6 +6,7 @@ function formatString(str) {
 async function loadAlgorithms() {
     const algorithmCardsContainer = document.getElementById('algorithm-cards');
 
+    //TODO: hACER QUE HAGA LA PETICION AL SERVIDOR Y QUE EL DEVUELVA EL JSON
     try {
         // Cargar datos del archivo JSON
         const response = await fetch('../algoritmos.json');
@@ -39,11 +40,32 @@ async function loadAlgorithms() {
         });
     } catch (error) {
         console.error('Error al cargar los algoritmos:', error);
-        algorithmCardsContainer.innerHTML = '<p>No se pudieron cargar los algoritmos. Inténtalo más tarde.</p>';
     }
+}
+
+function filterAlgorithms() {
+    // Obtener el valor del campo de búsqueda y convertirlo a minúsculas
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+    // Obtener todas las cards
+    const cards = document.querySelectorAll('.card');
+
+    // Iterar sobre cada card
+    cards.forEach(card => {
+        // Obtener el nombre del algoritmo (atributo data-name) y convertirlo a minúsculas
+        const cardName = card.querySelector('h3').textContent.toLowerCase();
+
+        // Verificar si el nombre coincide con el término de búsqueda
+        if (cardName.includes(searchTerm)) {
+            card.style.display = 'block'; // Mostrar la card si coincide
+        } else {
+            card.style.display = 'none'; // Ocultar la card si no coincide
+        }
+    });
 }
 
 // Inicializar la página
 document.addEventListener('DOMContentLoaded', () => {
     loadAlgorithms();
+    filterAlgorithms();
 });

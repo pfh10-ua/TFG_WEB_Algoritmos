@@ -115,9 +115,18 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                 }
             }
         }
+        escapeHtml(texto) {
+            return texto.replace(/&/g, '&amp;')
+             .replace(/</g, '&lt;')
+             .replace(/>/g, '&gt;');
+        }
+
         insertarCodigo(codigo, archivo){
             const code = this.shadowRoot.querySelector('code');
-            const lineas = codigo.split('\n');
+            // Limpiar el contenido previo
+            const codigoSinEspeciales = this.escapeHtml(codigo); // Escapa caracteres especiales
+            const lineas = codigoSinEspeciales.split('\n');
+            console.log(codigo);
             const codigoConDivs = lineas.map((linea, index) =>{
                  return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); // Añade un div por cada línea
             code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML

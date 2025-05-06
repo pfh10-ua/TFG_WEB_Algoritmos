@@ -205,16 +205,8 @@ async function init(){
 	let path = "";
 	let variablesObtenidas;
 
-	// const menuToggle = document.getElementById("menuToggle");
-	// const navLinks = document.querySelector("ul.nav-links");
-
-	// //Menú desplegable en dispositivos móviles
-	// menuToggle.addEventListener("click", () => {
-	// 	navLinks.classList.toggle("active");
-	// });
-
 	// Cargar los datos del archivo JSON
-	
+	//TODO: Cambiar la ruta para que cargue desde el servidor
   	try {
 		algorithmsData = await cargarJsonDirectorio();
 		if (algorithmsData[name]) {
