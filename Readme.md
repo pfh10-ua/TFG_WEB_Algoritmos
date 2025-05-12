@@ -101,9 +101,6 @@ La entrada debe ser como el ejemplo siguiente:
 > - Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
 > - Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
 
-> [!TIP]
-> Puedes usar un validador JSON en línea para verificar la estructura del archivo antes de proceder.
-
 ## 💻 Tecnologías Utilizadas
 - HTML + CSS + JavaScript.
 - Node.js con Express.
