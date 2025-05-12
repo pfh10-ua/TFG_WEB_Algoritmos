@@ -95,9 +95,9 @@ La entrada debe ser como el ejemplo siguiente:
 },
 ```
 > [!IMPORTANT]
-> - Consideraciones
-> - **Nombre del algoritmo (clave JSON)**: debe de ir en minúsculas, sin espacios y coincidir con el nombre de los ficheros fuente subidos.
-> - **`pathGithub`**: Debe coincidir con la ruta del repositorio GitHub.
+> Consideraciones:
+> - Nombre del algoritmo (clave JSON): debe de ir en minúsculas, sin espacios y coincidir con el nombre de los ficheros fuente subidos.
+> - `pathGithub`: Debe coincidir con la ruta del repositorio GitHub.
 > - Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
 > - Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
 
