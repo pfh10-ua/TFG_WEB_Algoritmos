@@ -7,7 +7,6 @@ Este documento describe el funcionamiento del código del proyecto de la página
 Todo está contenido en la carpeta public
 - **index.html**
     - Contiene la estructura principal de la página web.
-<<<<<<< HEAD
 - **styles.css**
     - Define los estilos y el diseño de la página web.
 - **script.js**
@@ -41,7 +40,6 @@ Todo está contenido en la carpeta public
 
 ## Despliegue
 Para realizar el despliegue debemos de ejecutar node --env-file .env app.js y tener la versión >= 20;
-=======
 - **app.js**
     - Contiene las peticiones a la API de github mediante una API interna.
 - **algoritmos.json**
@@ -62,6 +60,5 @@ Para realizar el despliegue debemos de ejecutar node --env-file .env app.js y te
 > Se nececita instalar express y atob. Además la versión de node debe ser superior a la 20 para ejecutar el siguiente comando y no depender de dotenv
 
 Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
->>>>>>> 8ef7e692d40a16f68e4885add214869905fb6aa8
 
 

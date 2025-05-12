@@ -24,7 +24,7 @@ body {
 }
 
 .hero .content {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     padding: 2rem;
     border-radius: 10px;
 }
@@ -37,6 +37,15 @@ body {
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
 }
 
 /* Botón de GitHub */
@@ -64,6 +73,7 @@ body {
 
 /* Sobre Nosotros */
 .about {
+    margin: 2rem auto;
     padding: 2rem;
     background-color: #fff;
     text-align: center;
@@ -72,6 +82,13 @@ body {
 .about h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+}
+
+.about p {
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.5;
+    padding: 20px;
 }
 
 /* Sección de Algoritmos */
@@ -103,7 +120,11 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 200px;
+    height: 400px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -113,6 +134,7 @@ body {
 }
 
 .card h3 {
+    text-align: center;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
@@ -122,9 +144,19 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* .card p {
-    height: 1rem;
-} */
+.card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;     /* Cambia a cuántas líneas quieres mostrar */
+    line-clamp: 6;             /* Standard property for compatibility */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.initial-cards{
+    height: auto;
+    min-height: 200px;
+}
 
 #searchInput {
     width: 50%;

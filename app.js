@@ -1,6 +1,6 @@
 const express = require('express');
 //const fetch = require('node-fetch');
-const atob = require('atob'); // Necesario para decodificar Base64 si no está disponible globalmente
+const atob = require('atob');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -94,10 +94,9 @@ app.get('/load-file', async (req, res) => {
         }
 
         // Decodificar el contenido Base64 como texto UTF-8
-        const base64Content = data.content;
-        const decodedBytes = Uint8Array.from(atob(base64Content), (c) => c.charCodeAt(0));
-        const decoder = new TextDecoder("utf-8");
-        const content = decoder.decode(decodedBytes);
+        const decodedBytes = Uint8Array.from(atob(data.content), (c) => c.charCodeAt(0)); // Convierte el contenido Base64 en un array de bytes
+        const decoder = new TextDecoder("utf-8"); // Crea un decodificador para texto UTF-8
+        const content = decoder.decode(decodedBytes); // Decodifica los bytes en una cadena de texto
 
         res.json({ archivo, content });
     } catch (error) {

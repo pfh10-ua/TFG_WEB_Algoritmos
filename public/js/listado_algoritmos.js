@@ -6,7 +6,6 @@ function formatString(str) {
 async function loadAlgorithms() {
     const algorithmCardsContainer = document.getElementById('algorithm-cards');
 
-    //TODO: hACER QUE HAGA LA PETICION AL SERVIDOR Y QUE EL DEVUELVA EL JSON
     try {
         // Cargar datos del archivo JSON
         const response = await fetch('../algoritmos.json');
@@ -16,13 +15,11 @@ async function loadAlgorithms() {
 
         const algorithmsJSON = await response.json();
         const algorithms = Object.values(algorithmsJSON);
-        console.log(algorithms);
 
         // Generar tarjetas para cada algoritmo
         algorithms.forEach(algorithm => {
             const title = formatString(algorithm.title);
             const complexities = algorithm.complexity;
-            console.log(complexities);
             const card = document.createElement('div');
             card.className = 'card';
 

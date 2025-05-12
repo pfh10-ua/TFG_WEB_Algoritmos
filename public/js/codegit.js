@@ -123,20 +123,14 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
 
         insertarCodigo(codigo, archivo){
             const code = this.shadowRoot.querySelector('code');
-            // Limpiar el contenido previo
             const codigoSinEspeciales = this.escapeHtml(codigo); // Escapa caracteres especiales
             const lineas = codigoSinEspeciales.split('\n');
-            console.log(codigo);
             const codigoConDivs = lineas.map((linea, index) =>{
                  return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); // Añade un div por cada línea
             code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML
-            // code.textContent = codigo;
             const titulo = document.createElement('div');
             titulo.id = "titulo-archivo"; // Asigna un id al título
             titulo.textContent = `${archivo}`; // Crea un nuevo div con el nombre del archivo
-            // titulo.style.fontWeight = "bold"; // Estilo para el nombre del archivo
-            // titulo.style.marginBottom = "10px"; // Espacio entre el nombre del archivo y el código
-            // titulo.style.color = "#00ff00"; // Color verde para el nombre del archivo
             const pre = this.shadowRoot.querySelector('pre');
             const existingTitle = this.shadowRoot.querySelector('#titulo-archivo'); // Busca el div existente
             if (existingTitle) {
