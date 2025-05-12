@@ -1,64 +1,110 @@
 # Documentación del Funcionamiento del Código
 
 ## Introducción
-Este documento describe el funcionamiento del código del proyecto de la página web. He utilizado Markmap para visualizar la estructura del contenido.
+Este proyecto consiste en una página web que muestra distintos algoritmos con su información y archivos fuente, obtenidos dinámicamente desde un repositorio privado o público de GitHub.
 
-## Estructura del Proyecto
+## 📁 Estructura del Proyecto
 Todo está contenido en la carpeta public
-- **index.html**
-    - Contiene la estructura principal de la página web.
-- **styles.css**
-    - Define los estilos y el diseño de la página web.
-- **script.js**
-    - Contiene la lógica y las interacciones de la página web.
+public/
+├── css/
+│ ├── comun.css
+│ ├── principal.css
+│ └── style.css
+├── html_files/
+│ ├── algoritmos.html
+│ ├── contacto.html
+│ └── showAlgorithm.html
+├── img/
+│ ├── [archivos .png y .webp de logos y lenguajes]
+├── js/
+│ ├── codegit.js
+│ ├── dataLoader.js
+│ ├── infoAlgorithm.js
+│ ├── listado_algoritmos.js
+│ ├── menu.js
+├── algoritmos.json
+├── extensiontoImg.json
+├── index.html
 
-## index.html
-- **Header**
-    - Contiene el título y la navegación principal.
-- **Main**
-    - Sección principal con el contenido de la página.
-- **Footer**
-    - Información de contacto y enlaces adicionales.
+## 🚀 Guía de Despliegue
 
-## styles.css
-- **Body**
-    - Define el estilo general del cuerpo de la página.
-- **Header**
-    - Estilos específicos para el encabezado.
-- **Main**
-    - Estilos para la sección principal.
-- **Footer**
-    - Estilos para el pie de página.
+### 🧩 Requisitos
 
-## script.js
-- **Funciones**
-    - `init()`
-        - Inicializa los eventos y configuraciones de la página.
-- **Eventos**
-    - `DOMContentLoaded`
-        - Ejecuta `init()` cuando el DOM está completamente cargado.
+- Node.js `>= 20`
+- Dependencias: `express`, `atob`
 
-## Despliegue
-Para realizar el despliegue debemos de ejecutar node --env-file .env app.js y tener la versión >= 20;
-- **app.js**
-    - Contiene las peticiones a la API de github mediante una API interna.
-- **algoritmos.json**
-    - JSON que contiene la información de los algoritmos y las variables utilizadas en cada uno de ellos.
-- **extensiontoImg.json**
-    - JSON que relaciona la extensión de un fichero con la imagen asociada al lenguaje utilizado al escribir un algoritmo.
-- **Carpeta css**
-    - Contiene los ficheros css usados en las páginas HTML del proyecto.
-- **Carpeta html_files**
-    - Contiene los ficheros html utilizados en el proyecto.
-- **Carpeta img**
-    - Guarda las imagenes usadas.
-- **Carpeta JS**
-    - Almacena los ficheros de Javascript.
+Para instalar las dependencias ejecutamos el siguiente comando:
+```bash
+npm install express atob
+```
 
-## Despliegue
+### ▶️ Despliegue
+Para realizar el despliegue debemos de ejecutar: 
+```bash
+node --env-file .env app.js
+```
+
+Esto permite cargar las variables de entorno sin usar la libería dotenv
+
+> [!TIP]
+> Si tienes una versión de Node.js >= 22 puedes agregar la siguiente línea:
+> ```bash
+> process.loadEnvFile();
+> ```
+> Esto permite cargar las variables de entorno al realizar el despliegue y el comando nuevo sería:
+>```bash
+>node --env-file .env app.js
+>```
+
+### ⚙️ Contenido del fichero .env
+Debe contener las siguientes variables:
+```bash
+GITHUB_TOKEN=tu_token_personal
+REPO_OWNER=tu_usuario_github
+REPO_NAME=nombre_del_repositorio
+```
 > [!NOTE]
-> Se nececita instalar express y atob. Además la versión de node debe ser superior a la 20 para ejecutar el siguiente comando y no depender de dotenv
+> El token es necesario al ser el repositorio privado. Además de esta forma se permiten 5000 peticiones/hora peo si no lo estás solamente 60.
 
-Para realizar el despliegue debemos de ejecutar node --env-file .env app.js
+> [!CAUTION]
+> Recuerda no subir tu fichero .env
+
+## ➕ Añadir Nuevos Algoritmos
+### 1. Crear Carpeta del Algoritmo (si no está creada ya)
+La carpeta se debe crear en el directorio correspondiente y el nombre de la carpeta debe de comenzar con mayúscula.
+
+### 2. Subir Archivos Fuente
+Los nombres de los archivos deben estar en minúsculas, y coincidir con el identificador del algoritmo que se pondrá en el archivo JSON en el siguiente paso.
+
+### 3. Añadir Entrada en `algoritmos.json`
+La entrada debe ser como el ejemplo siguiente:
+```json
+"bubblesort": {
+        "title": "Bubble Sort",
+        "description": "Bubble Sort es un algoritmo de ordenación simple. Funciona comparando cada elemento de la lista con el siguiente, y cambiándolos de posición si están en el orden incorrecto. El proceso se repite hasta que la lista esté ordenada.",
+        "complexity": {
+            "best": "O(n)",
+            "average": "O(n^2)",
+            "worst": "O(n^2)"
+        },
+        "pathGithub": "Ordenacion/Directos/Bubblesort/"
+    },
+```
+> [!IMPORTANT]
+> Consideraciones
+> Nombre del algoritmo (clave JSON): debe de ir en minúsculas, sin espacios y coincidir con el nombre de los ficheros fuente subidos.
+> pathGithub: Debe coincidir con la ruta del repositorio GitHub.
+> Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
+> Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
+
+> [!TIP]
+> Puedes usar un validador JSON en línea para verificar la estructura del archivo antes de proceder.
+
+## 💻 Tecnologías Utilizadas
+- HTML + CSS + JavaScript.
+- Node.js con Express.
+- GitHub API para obtener el contenido de los ficheros.
+
+
 
 
