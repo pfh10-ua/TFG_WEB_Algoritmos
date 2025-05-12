@@ -4,7 +4,8 @@
 Este proyecto consiste en una página web que muestra distintos algoritmos con su información y archivos fuente, obtenidos dinámicamente desde un repositorio privado o público de GitHub.
 
 ## 📁 Estructura del Proyecto
-Todo está contenido en la carpeta public
+Todo está contenido en la carpeta `public/`:
+
 public/
 ├── css/
 │ ├── comun.css
@@ -25,6 +26,8 @@ public/
 ├── algoritmos.json
 ├── extensiontoImg.json
 ├── index.html
+
+`app.js` es el servidor de Node.js con Express que levantaremos a continuación
 
 ## 🚀 Guía de Despliegue
 
@@ -80,15 +83,15 @@ Los nombres de los archivos deben estar en minúsculas, y coincidir con el ident
 La entrada debe ser como el ejemplo siguiente:
 ```json
 "bubblesort": {
-        "title": "Bubble Sort",
-        "description": "Bubble Sort es un algoritmo de ordenación simple. Funciona comparando cada elemento de la lista con el siguiente, y cambiándolos de posición si están en el orden incorrecto. El proceso se repite hasta que la lista esté ordenada.",
-        "complexity": {
-            "best": "O(n)",
-            "average": "O(n^2)",
-            "worst": "O(n^2)"
-        },
-        "pathGithub": "Ordenacion/Directos/Bubblesort/"
+    "title": "Bubble Sort",
+    "description": "Bubble Sort es un algoritmo de ordenación simple. Funciona comparando cada elemento de la lista con el siguiente, y cambiándolos de posición si están en el orden incorrecto. El proceso se repite hasta que la lista esté ordenada.",
+    "complexity": {
+        "best": "O(n)",
+        "average": "O(n^2)",
+        "worst": "O(n^2)"
     },
+    "pathGithub": "Ordenacion/Directos/Bubblesort/"
+},
 ```
 > [!IMPORTANT]
 > Consideraciones
