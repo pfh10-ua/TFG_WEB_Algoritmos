@@ -5,7 +5,7 @@ Este proyecto consiste en una página web que muestra distintos algoritmos con s
 
 ## 📁 Estructura del Proyecto
 Todo está contenido en la carpeta `public/`:
-
+```
 public/
 ├── css/
 │ ├── comun.css
@@ -26,6 +26,7 @@ public/
 ├── algoritmos.json
 ├── extensiontoImg.json
 ├── index.html
+```
 
 `app.js` es el servidor de Node.js con Express que levantaremos a continuación
 
