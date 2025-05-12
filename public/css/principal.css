@@ -1,15 +1,13 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 /* Fuentes y colores */
 body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
+    min-height: 100vh;
 }
 
 /* Hero Section */
@@ -165,4 +163,25 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+}
+
+#contact {
+    padding: 2rem;
+    background-color: #c6dcf2;
+    text-align: center;
+}
+
+#contact h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#contact li {
+    list-style: none;
+    margin: 2rem 2rem;
+    padding: auto;
+}
+
+main{
+    flex: 1;
 }
