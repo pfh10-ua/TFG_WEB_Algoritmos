@@ -28,7 +28,7 @@ public/
 ├── index.html
 ```
 
-`app.js` es el servidor de Node.js con Express que levantaremos a continuación
+`app.js` es el servidor de Node.js con Express que levantaremos a continuación.
 
 ## 🚀 Guía de Despliegue
 
@@ -42,24 +42,6 @@ Para instalar las dependencias ejecutamos el siguiente comando:
 npm install express atob
 ```
 
-### ▶️ Despliegue
-Para realizar el despliegue debemos de ejecutar: 
-```bash
-node --env-file .env app.js
-```
-
-Esto permite cargar las variables de entorno sin usar la libería dotenv
-
-> [!TIP]
-> Si tienes una versión de Node.js >= 22 puedes agregar la siguiente línea:
-> ```bash
-> process.loadEnvFile();
-> ```
-> Esto permite cargar las variables de entorno al realizar el despliegue y el comando nuevo sería:
->```bash
->node --env-file .env app.js
->```
-
 ### ⚙️ Contenido del fichero .env
 Debe contener las siguientes variables:
 ```bash
@@ -72,6 +54,24 @@ REPO_NAME=nombre_del_repositorio
 
 > [!CAUTION]
 > Recuerda no subir tu fichero .env
+
+### ▶️ Despliegue
+Para realizar el despliegue debemos de ejecutar: 
+```bash
+node --env-file .env app.js
+```
+
+Esto permite cargar las variables de entorno sin usar la libería dotenv.
+
+> [!TIP]
+> Si tienes una versión de Node.js >= 22 puedes agregar la siguiente línea:
+> ```bash
+> process.loadEnvFile();
+> ```
+> Esto permite cargar las variables de entorno al realizar el despliegue y el comando nuevo sería:
+>```bash
+> node app.js
+>```
 
 ## ➕ Añadir Nuevos Algoritmos
 ### 1. Crear Carpeta del Algoritmo (si no está creada ya)
@@ -95,11 +95,11 @@ La entrada debe ser como el ejemplo siguiente:
 },
 ```
 > [!IMPORTANT]
-> Consideraciones
-> Nombre del algoritmo (clave JSON): debe de ir en minúsculas, sin espacios y coincidir con el nombre de los ficheros fuente subidos.
-> pathGithub: Debe coincidir con la ruta del repositorio GitHub.
-> Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
-> Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
+> - Consideraciones
+> - **Nombre del algoritmo (clave JSON)**: debe de ir en minúsculas, sin espacios y coincidir con el nombre de los ficheros fuente subidos.
+> - **`pathGithub`**: Debe coincidir con la ruta del repositorio GitHub.
+> - Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
+> - Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
 
 > [!TIP]
 > Puedes usar un validador JSON en línea para verificar la estructura del archivo antes de proceder.
