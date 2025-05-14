@@ -105,6 +105,7 @@ La entrada debe ser como el ejemplo siguiente:
 - HTML + CSS + JavaScript.
 - Node.js con Express.
 - GitHub API para obtener el contenido de los ficheros.
+- D3.js para crear los diagramas de barras.
 
 
 
