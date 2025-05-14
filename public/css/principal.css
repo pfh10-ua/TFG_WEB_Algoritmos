@@ -62,12 +62,15 @@ body {
 
 #github-button img {
     margin-right: 0.5rem;
+    width: 24px;
+    height: 24px;
 }
 
 #github-button:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(255, 255, 255, 0.616);
 }
+
 
 /* Sobre Nosotros */
 .about {
@@ -118,7 +121,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 200px;
-    height: 400px;
+    height: auto;
+    min-height: 400px;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -144,11 +148,10 @@ body {
 
 .card p {
     display: -webkit-box;
-    -webkit-line-clamp: 6;     /* Cambia a cuántas líneas quieres mostrar */
-    line-clamp: 6;             /* Standard property for compatibility */
+    -webkit-line-clamp: 7;
+    line-clamp: 7;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .initial-cards{
@@ -161,13 +164,13 @@ body {
     padding: 1lh;
     margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
 }
 
 #contact {
     padding: 2rem;
-    background-color: #c6dcf2;
+    background-color: #f4f4f4;
     text-align: center;
 }
 
@@ -179,9 +182,17 @@ body {
 #contact li {
     list-style: none;
     margin: 2rem 2rem;
-    padding: auto;
 }
 
 main{
     flex: 1;
+}
+
+.contact-info li {
+    margin-bottom: 15px;
+}
+
+.contact-info img {
+    width: 64px;
+    vertical-align: middle;
 }

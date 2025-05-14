@@ -31,6 +31,7 @@ async function loadAlgorithms() {
                     <li>Mejor caso: ${complexities.best}</li>
                     <li>Caso promedio: ${complexities.average}</li>
                     <li>Peor caso: ${complexities.worst}</li>
+                </ul>
                 <a href="showAlgorithm.html?nameAlgoritmo=${title}" target="_blank">Ver más</a>`;
 
             algorithmCardsContainer.appendChild(card);

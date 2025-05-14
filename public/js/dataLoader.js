@@ -24,7 +24,7 @@ export async function cargarJsonDirectorio() {
 
 export async function getLoadFolder(nameAlgoritm) {
     try {
-        const response = await fetch(`/load-folder?algoritmo=${nameAlgoritm}`);
+        const response = await fetch(`/load-folder?path_algoritmo=${nameAlgoritm}`);
         if (!response.ok) {
             throw new Error(`Error al cargar la carpeta: ${response.statusText}`);
         }

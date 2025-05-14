@@ -23,14 +23,21 @@ main h1{
     color: black;
     padding: 2px;
 }
+#buttons-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px auto;
+}
 button:hover{
     background-color: black;
     color: white;
 }
 #description{
     font-size: 1.2em;
-    text-align: justify;
-    background-color: blueviolet;
+    text-align: center;
+    background-color: #0437c4;
     color: white;
     padding: 1px;
     margin: 2px auto;

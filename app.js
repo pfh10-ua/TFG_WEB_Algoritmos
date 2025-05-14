@@ -36,16 +36,16 @@ const repo = process.env.REPO_NAME;
 
 // Ruta para cargar los archivos de una carpeta específica
 app.get('/load-folder', async (req, res) => {
-    const { algoritmo } = req.query;
+    const { path_algoritmo } = req.query;
 
     // Validar si se proporcionó el parámetro folder
-    if (!algoritmo) {
+    if (!path_algoritmo) {
         return res.status(400).json({ error: 'Debe proporcionar una carpeta.' });
     }
 
     try {
         // Construye la URL a GitHub
-        const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${algoritmo}`;
+        const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path_algoritmo}`;
         console.log('Solicitando a GitHub:', githubUrl);
 
         // Realiza la petición a GitHub
