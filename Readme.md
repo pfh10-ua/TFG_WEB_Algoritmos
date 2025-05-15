@@ -187,7 +187,7 @@ module.exports ={
 };
 ```
 ### Cosas a destacar
-- Todo el fichero es un module.export={};
+- Todo el fichero es un `module.export={};`
 - En variables se encuentran:
     - `indices` que son las variables para los bucles.
     - `colors` indica los colores que representarán a los índices. Es importante que haya la misma cantidad de colores que índices. El `color por defecto` para valores que no represente un índice es `"teal"`. Van por orden de los índices. El primer color es para el primer índice y así sucesivamente.
@@ -195,14 +195,32 @@ module.exports ={
     - `data` representa los valores numéricos a ordenar.
     - `lineaActual` contiene la línea actual en la que estás dependiendo del lenguaje que se esté utilizando gracias a la terminación del fichero fuente.
     - `language` guarda dicha extensión del fichero fuente.
-- La función que indica las condiciones de una iteración se muestra nextstep.
+- La función que indica las posibles decisiones de una iteración se debe llamar `nextstep`. Y debe tener la siguiente estructura:
     - Primero se deben de importar las variables.
     ```
     const { variables } = this;
     ```
     - Posteriormente, se debe comprobar el valor de `sortedOrFind` para saber si se ha ordenado o se ha encontrado el elemento.
+    ```
+    if (variables.sortedOrFind) return; 
+    ```
     - Seguidamente, iría el cuerpo del algoritmo recorriendo cada una de las posibles decisiones a tomar en una iteración y aumentando los índices de manera correcta. Hay que destacar que el profesor, puede crear sus propias funciones para marcar líneas como en el ejemplo pueden ser `getUpdateMinIndexLine` o `getSwapLine` dependiendo del lenguaje a utilizar como párametro. Es por ello que se debe crear un switch con los diferentes casos o extensiones indicando el número de líneas o el array de líneas a marcar en cada caso.
-
+    ```
+    getUpdateMinIndexLine: function (language) {
+        switch (language) {
+            case 'cpp': return [9,10];
+            case 'py': return [13,14];
+            default: return '-';
+        }
+    },
+    getSwapLine: function (language) {
+        switch (language) {
+            case 'cpp': return 13;
+            case 'py': return 16;
+            default: return '-';
+        }
+    }
+    ```
 
 ## 💻 Tecnologías Utilizadas
 - HTML + CSS + JavaScript.
