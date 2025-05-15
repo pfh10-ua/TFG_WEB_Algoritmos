@@ -55,8 +55,8 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 	.attr("fill", "black"); // Color del texto
 
   // Actualizar el texto del estado del ordenamiento
-  if (variables.sorted) {
-	statusText.text("¡El arreglo está completamente ordenado!"); // Mostrar mensaje cuando esté ordenado
+  if (variables.sortedOrFind) {
+	statusText.text("Fin del algoritmo"); // Mostrar mensaje cuando esté ordenado o encontrado
   } else {
 	statusText.text(""); // Limpiar el mensaje si no está ordenado
   }
@@ -203,7 +203,6 @@ async function init(){
 	const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
 	let description = "";
 	let path = "";
-	let variablesObtenidas;
 
 	// Cargar los datos del archivo JSON
 	//TODO: Cambiar la ruta para que cargue desde el servidor
@@ -243,7 +242,6 @@ async function init(){
 			new Function("module", content)(module); // Ejecutar el código del módulo
 
 			const {variables, nextstep} = module.exports; // Extraer las variables y la función de nextStep
-			variablesObtenidas = variables.lineaActual; // Guardar las líneas iniciales
 			const copiaVariables = structuredClone(variables); // Copia de las variables de manera superficial
 			// Dimensiones del gráfico
 			const width = 500; // Ancho total del SVG
