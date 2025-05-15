@@ -101,7 +101,7 @@ La entrada debe ser como el ejemplo siguiente:
 > - Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
 > - Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
 
-## Animación del algoritmo.
+## 📊 Animación del algoritmo.
 Para poder tener animación en el algoritmo, es necesario subir un fichero llamado nextstep.js cuyo contenido podría ser el siguiente en el caso del algoritmo llamado selectionSort:
 ```
 module.exports ={
