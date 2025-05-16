@@ -14,52 +14,53 @@ let copiaGlobalVariables = {};
  * Función para renderizar el gráfico de barras
  */
 function renderGraphic(variables, svg, height, barWidth, statusText) {
-  // Eliminar las barras previas antes de volver a dibujar
-  svg.selectAll("rect").remove();
-  svg.selectAll("text").remove();
+	// Eliminar las barras previas antes de volver a dibujar
+	svg.selectAll("rect").remove();
+	svg.selectAll("text").remove();
 
-  // Dibujar las barras
-  svg.selectAll("rect")
-	.data(variables.data) // Asignar los datos a las barras
-	.enter()// Un elemento a cada dato del array
-	.append("rect")
-	.attr("x", (d, idx) => idx * barWidth) // Posición horizontal de cada barra
-	.attr("y", d => height - d) // Posición vertical basada en el valor de la barra
-	.attr("width", barWidth - 2) // Ancho de la barra (con separación)
-	.attr("height", d => d) // Altura de la barra basada en el valor
-	.attr("fill", (d, idx) => {
-		// Extraer los valores de variables.indices en un array
-        const indicesArray = Object.values(variables.indices);
+	// Dibujar las barras
+	svg.selectAll("rect")
+		.data(variables.data) // Asignar los datos a las barras
+		.enter()// Un elemento a cada dato del array
+		.append("rect")
+		.attr("x", (d, idx) => idx * barWidth) // Posición horizontal de cada barra
+		.attr("y", d => height - d) // Posición vertical basada en el valor de la barra
+		.attr("width", barWidth - 2) // Ancho de la barra (con separación)
+		.attr("height", d => d) // Altura de la barra basada en el valor
+		.attr("fill", (d, idx) => {
+			// Extraer los valores de variables.indices en un array
+			const indicesArray = Object.values(variables.indices);
 
-        // Buscar si el índice actual (idx) está en el array de índices
-        const indexInArray = indicesArray.indexOf(idx);
+			// Buscar si el índice actual (idx) está en el array de índices
+			const indexInArray = indicesArray.indexOf(idx);
 
-        // Si el índice está en el array, devolver el color correspondiente
-        if (indexInArray !== -1) {
-            return variables.colors[indexInArray];
-        }
+			// Si el índice está en el array, devolver el color correspondiente
+			if (indexInArray !== -1) {
+				return variables.colors[indexInArray];
+			}
 
-        // Si no está en el array, devolver el color base
-        return "teal";
+			// Si no está en el array, devolver el color base
+			return "teal";
 	});
-  // Agregar etiquetas de texto para los valores
-  svg.selectAll("text")
-	.data(variables.data)
-	.enter()
-	.append("text")
-	.text(d => d) // Mostrar el valor de la barra
-	.attr("x", (d, idx) => idx * barWidth + (barWidth - 2) / 2) // Centrar el texto en la barra
-	.attr("y", d => height - d - 5) // Colocar el texto encima de la barra
-	.attr("text-anchor", "middle") // Centrar el texto horizontalmente
-	.attr("font-size", "12px") // Tamaño del texto
-	.attr("fill", "black"); // Color del texto
+	// Agregar etiquetas de texto para los valores
+	svg.selectAll("text")
+		.data(variables.data)
+		.enter()
+		.append("text")
+		.text(d => d) // Mostrar el valor de la barra
+		.attr("x", (d, idx) => idx * barWidth + (barWidth - 2) / 2) // Centrar el texto en la barra
+		.attr("y", d => height - d - 5) // Colocar el texto encima de la barra
+		.attr("text-anchor", "middle") // Centrar el texto horizontalmente
+		.attr("font-size", "12px") // Tamaño del texto
+		.attr("fill", "black"); // Color del texto
 
-  // Actualizar el texto del estado del ordenamiento
-  if (variables.sortedOrFind) {
-	statusText.text("Fin del algoritmo"); // Mostrar mensaje cuando esté ordenado o encontrado
-  } else {
-	statusText.text(""); // Limpiar el mensaje si no está ordenado
-  }
+	// Actualizar el texto del estado del ordenamiento
+	if (variables.sortedOrFind) {
+		statusText.text("Fin del algoritmo"); // Mostrar mensaje cuando esté ordenado o encontrado
+	} 
+	else {
+		statusText.text(""); // Limpiar el mensaje si no está ordenado
+	}
 }
 
 /**
@@ -121,8 +122,7 @@ function getParameters(nameParameter){
 	return urlParams.get(nameParameter);
 }
 
-function addHeadingToMain(nameAlgorithm) {
-	const titlePage = nameAlgorithm.charAt(0).toUpperCase() + nameAlgorithm.slice(1);
+function addHeadingToMain(titlePage) {
 	const mainElement = document.querySelector("main");
 	if (mainElement) {
 		const heading = document.createElement("h1");
@@ -201,6 +201,7 @@ async function init(){
 	// Variable para almacenar los datos del archivo JSON
 	let algorithmsData = {};
 	const name = getParameters("nameAlgoritmo");//Captura el parámetro de la URL
+	let titulo = "";
 	let description = "";
 	let path = "";
 
@@ -210,7 +211,11 @@ async function init(){
 		algorithmsData = await cargarJsonDirectorio();
 		if (algorithmsData[name]) {
 			const selectedAlgorithm = algorithmsData[name];
+			// Devolver el valor description del algoritmo y la ruta de Github
+			titulo = selectedAlgorithm.title;
+		  	description = selectedAlgorithm.description;
 			path = selectedAlgorithm.pathGithub;
+			
 		  
 		  	// Crear las variables dinámicamente
 		  	// selectedAlgorithm.variables.forEach(variable => {
@@ -219,8 +224,7 @@ async function init(){
 			// 	colores[variable.name] = variable.color;
 			// });
 
-		  	// Devolver el valor description del algoritmo
-		  	description = selectedAlgorithm.description;
+		  	
 		} else {
 			alert("Error: El nombre del algoritmo no existe en el archivo JSON.");
 			return;
@@ -233,7 +237,7 @@ async function init(){
 	// Agregar la descripción del algoritmo al <main>
 	addDescriptionToMain(description);
 	// Agregar el título del algoritmo al <main>
-	addHeadingToMain(name);
+	addHeadingToMain(titulo);
 	if (path !== "") {
 		// Cargar el contenido del archivo
 		const content = await getLoadFile(path, "nextstep.js");

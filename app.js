@@ -98,6 +98,20 @@ app.get('/load-file', async (req, res) => {
         const decoder = new TextDecoder("utf-8"); // Crea un decodificador para texto UTF-8
         const content = decoder.decode(decodedBytes); // Decodifica los bytes en una cadena de texto
 
+        if (archivo === "nextstep.js"){ // Verifica si el nextstep.js contiene 'module.exports' 
+        // porque es el único que se convierte en función que se ejecuta 
+            if (!/module\.exports\s*=/.test(content)) { 
+                console.error('Error al analizar el contenido del archivo:')
+                return res.status(400).json({ error: "Contenido inválido: no se encontró 'module.exports'." });
+            }
+            const forbiddenPatterns = ["eval(", "Function(", "require(", "import(", "fetch("];
+            for (const pattern of forbiddenPatterns) {
+                if (content.includes(pattern)) {
+                    return res.status(400).json({ error: `Código prohibido detectado: '${pattern}'` });
+                }
+            }
+        } 
+
         res.json({ archivo, content });
     } catch (error) {
         console.error('Error al cargar el fichero:', error);
