@@ -104,7 +104,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.algorithm-cards {
+#algorithm-cards {
     display: flex;
     justify-content: center;
     gap: 1rem;
