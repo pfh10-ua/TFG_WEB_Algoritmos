@@ -28,6 +28,16 @@
             "worst": "O(n)"
         },
         "pathGithub": "Búsqueda/Secuencial/"
+    },
+    "insertionsort": {
+        "title": "Insertion Sort",
+        "description": "Insertion Sort es un algoritmo de ordenamiento simple que construye la lista ordenada uno a uno, tomando cada elemento y colocándolo en la posición correcta respecto a los elementos anteriores ya ordenados.",
+        "complexity": {
+            "best": "O(n)",
+            "average": "O(n^2)",
+            "worst": "O(n^2)"
+        },
+        "pathGithub": "Ordenacion/Directos/Insertion Sort/"
     }
 
 }
