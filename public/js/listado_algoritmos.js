@@ -1,3 +1,5 @@
+import { getLoadFile } from './dataLoader.js';
+
 function formatString(str) {
     return str.toLowerCase().replace(/\s+/g, '');
 }
@@ -8,12 +10,12 @@ async function loadAlgorithms() {
 
     try {
         // Cargar datos del archivo JSON
-        const response = await fetch('../algoritmos.json');
-        if (!response.ok) {
+        const response = await getLoadFile("", "algoritmos.json");
+        if (!response) {
             throw new Error('No se pudo cargar la lista de algoritmos.');
         }
 
-        const algorithmsJSON = await response.json();
+        const algorithmsJSON = JSON.parse(response);
         const algorithms = Object.values(algorithmsJSON);
 
         // Generar tarjetas para cada algoritmo

@@ -10,18 +10,6 @@ export async function cargarJsonImg() {
     }
 }
 
-export async function cargarJsonDirectorio() {
-    try {
-        const response = await fetch('../algoritmos.json'); // Ruta al archivo JSON
-        if (!response.ok) {
-            throw new Error(`Error al cargar JSON: ${response.statusText}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error al cargar el archivo JSON:", error);
-    }
-}
-
 export async function getLoadFolder(nameAlgoritm) {
     try {
         const response = await fetch(`/load-folder?path_algoritmo=${nameAlgoritm}`);

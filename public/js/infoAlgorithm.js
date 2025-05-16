@@ -1,4 +1,4 @@
-import { cargarJsonDirectorio, getLoadFile } from './dataLoader.js';
+import { getLoadFile } from './dataLoader.js';
 
 // Variables globales para almacenar los valores de las variables del algoritmo
 let globalVariables = {};
@@ -206,9 +206,9 @@ async function init(){
 	let path = "";
 
 	// Cargar los datos del archivo JSON
-	//TODO: Cambiar la ruta para que cargue desde el servidor
   	try {
-		algorithmsData = await cargarJsonDirectorio();
+		const contenidoString = await getLoadFile("", "algoritmos.json");
+		algorithmsData = JSON.parse(contenidoString);
 		if (algorithmsData[name]) {
 			const selectedAlgorithm = algorithmsData[name];
 			// Devolver el valor description del algoritmo y la ruta de Github

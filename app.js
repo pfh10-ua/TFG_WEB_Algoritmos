@@ -80,8 +80,8 @@ app.get('/load-folder', async (req, res) => {
 app.get('/load-file', async (req, res) => {
     const { ruta, archivo } = req.query;
 
-    if (!ruta || !archivo) {
-        return res.status(400).json({ error: 'Debe proporcionar una ruta y un archivo.' });
+    if (!archivo) {
+        return res.status(400).json({ error: 'Debe proporcionar un archivo.' });
     }
 
     try {

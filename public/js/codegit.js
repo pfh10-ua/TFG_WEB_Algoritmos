@@ -1,4 +1,4 @@
-import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from './dataLoader.js';
+import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
 
 (()=> {
     const element = document.createElement("template");
@@ -89,7 +89,8 @@ import { cargarJsonImg, cargarJsonDirectorio, getLoadFolder, getLoadFile } from 
                     try {
                         // Carga la carpeta
                         if (Object.keys(this.directorios).length === 0) {
-                            this.directorios = await cargarJsonDirectorio();
+                            const contenidoAlgoritmosJSON = await getLoadFile("", "algoritmos.json");
+                            this.directorios = JSON.parse(contenidoAlgoritmosJSON);
                         }
                         const algoritmoData = this.directorios[this.algoritmo];
                         if (!algoritmoData) {
