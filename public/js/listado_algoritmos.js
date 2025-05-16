@@ -1,9 +1,5 @@
 import { getLoadFile } from './dataLoader.js';
 
-function formatString(str) {
-    return str.toLowerCase().replace(/\s+/g, '');
-}
-
 // Función para cargar y mostrar la lista de algoritmos
 async function loadAlgorithms() {
     const algorithmCardsContainer = document.getElementById('algorithm-cards');
@@ -15,12 +11,10 @@ async function loadAlgorithms() {
             throw new Error('No se pudo cargar la lista de algoritmos.');
         }
 
-        const algorithmsJSON = JSON.parse(response);
-        const algorithms = Object.values(algorithmsJSON);
+        const algorithmsJSON = JSON.parse(response);//Convertir a JSON
 
-        // Generar tarjetas para cada algoritmo
-        algorithms.forEach(algorithm => {
-            const title = formatString(algorithm.title);
+        // Generar tarjetas para cada algoritmo recorriendo el JSON
+        Object.entries(algorithmsJSON).forEach(([key, algorithm]) => {
             const complexities = algorithm.complexity;
             const card = document.createElement('div');
             card.className = 'card';
@@ -34,7 +28,7 @@ async function loadAlgorithms() {
                     <li>Caso promedio: ${complexities.average}</li>
                     <li>Peor caso: ${complexities.worst}</li>
                 </ul>
-                <a href="showAlgorithm.html?nameAlgoritmo=${title}" target="_blank">Ver más</a>`;
+                <a href="showAlgorithm.html?nameAlgoritmo=${key}" target="_blank">Ver más</a>`;
 
             algorithmCardsContainer.appendChild(card);
         });

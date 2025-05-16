@@ -63,6 +63,50 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 	}
 }
 
+function renderLegend(variables, svg, width, height) {
+  // Eliminar cualquier grupo de leyenda previo para evitar duplicados
+  svg.selectAll(".legend").remove();
+
+  // Obtener las claves de variables.indices, limitando a la cantidad de colores disponibles
+  // Así evitamos mostrar claves sin color asignado (por ejemplo 'key' si no hay color para ella)
+  const keys = Object.keys(variables.indices).filter((_, i) => i < variables.colors.length);
+
+  // Crear un array con objetos que contienen la etiqueta (clave) y el color correspondiente
+  const legendData = keys.map((key, i) => ({
+    label: key,           // Nombre del índice
+    color: variables.colors[i]  // Color asignado al índice según la posición
+  }));
+
+  // Crear un grupo SVG para contener la leyenda, y posicionarlo en la esquina superior izquierda
+  const legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(0, 30)`);
+
+  // Por cada elemento de legendData, crear una fila con rectángulo de color y texto descriptivo
+  legendData.forEach((d, i) => {
+    // Grupo para cada fila, desplazado verticalmente según su índice para separar filas
+	// Se separan 18 píxeles
+    const row = legend.append("g")
+      .attr("transform", `translate(0, ${i * 18})`);
+
+    // Añadir un rectángulo pequeño que muestra el color representativo de la clave
+    row.append("rect")
+      .attr("width", 12)       // Ancho del rectángulo
+      .attr("height", 12)      // Alto del rectángulo
+      .attr("fill", d.color)   // Color del rectángulo según legendData
+      .attr("stroke", "black")  // Borde negro para que resalte
+      .attr("stroke-width", 1);
+
+    // Añadir el texto con la etiqueta al lado del rectángulo
+    row.append("text")
+      .attr("x", 18)           // Posición horizontal, dejando espacio al rectángulo
+      .attr("y", 10)           // Posición vertical para centrar el texto respecto al rectángulo
+      .text(d.label)           // Texto con el nombre de la variable
+      .attr("font-size", "14px") // Tamaño de la letra
+      .attr("fill", "black");   // Color del texto (negro)
+  });
+}
+
 /**
  * Función para realizar un paso hacia adelante en el Selection Sort
  */
@@ -269,6 +313,7 @@ async function init(){
 				.text(""); // Inicialmente vacío
 			// Inicializar el gráfico con las barras
 			renderGraphic(variables, svg, height, barWidth, statusText);
+			renderLegend(variables, svg, width, height);
 			// Agregar eventos a los botones
 			document.getElementById("nextStep").addEventListener("click", () => {
 				consigueExtension();
@@ -279,6 +324,7 @@ async function init(){
 				}
 				//if(variables.lineaActual){seleccionaLinea(variables.lineaActual, variables.language);}
 				renderGraphic(variables, svg, height, barWidth, statusText);
+				renderLegend(variables, svg, width, height);
 			}); // Botón de avanzar
 			document.getElementById("restart").addEventListener("click", () => { // Botón de reiniciar
 				Object.assign(variables, structuredClone(copiaVariables)); // Restaurar los datos originales completamente
@@ -288,6 +334,7 @@ async function init(){
 					seleccionaLinea(variables.lineaActual[globalLanguage]);
 				}
 				renderGraphic(variables, svg, height, barWidth, statusText); // Volver a renderizar el gráfico
+				renderLegend(variables, svg, width, height);
 			}); 
 		}
 		else{
