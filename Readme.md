@@ -34,7 +34,7 @@ public/
 
 ### 🧩 Requisitos
 
-- Node.js `>= 20`
+- Node.js `>= 20` que puedes descragar en [text](https://nodejs.org/es/download)
 - Dependencias: `express`, `atob`
 
 Para instalar las dependencias ejecutamos el siguiente comando:
@@ -54,6 +54,12 @@ REPO_NAME=nombre_del_repositorio
 
 > [!CAUTION]
 > Recuerda no subir tu fichero .env
+
+> [!TIP]
+> El repositorio que puedes usar es como referencia puede ser el mío cuyo enlace es [text](https://github.com/pfh10-ua/AlgoritmosTFG)
+> Puedes hacer un fork de dicho repositorio
+> EL contenido de este repositorio te servirá también para entender mejor los siguientes apartados siguiente apartado
+
 
 ### ▶️ Despliegue
 Para realizar el despliegue debemos de ejecutar: 
