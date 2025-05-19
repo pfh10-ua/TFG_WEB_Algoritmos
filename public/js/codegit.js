@@ -148,8 +148,6 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
                 const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
                 if(fileNameWithoutExtension === nameAlgorithm.toLowerCase()){
                     const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-                    // console.log(extension);
-                    // console.log(this.extensionToImage);
 
                     if (this.extensionToImage[extension]) {
                         const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
@@ -164,7 +162,6 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
 
                         const caption = document.createElement('p');
                         caption.textContent = language; // Añade el nombre del lenguaje
-                        //console.log(language);
 
                         // Evento para cargar el contenido del archivo al hacer clic
                         img.addEventListener('click', async () => {

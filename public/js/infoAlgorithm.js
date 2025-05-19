@@ -322,7 +322,6 @@ async function init(){
 				if (variables.lineaActual[globalLanguage]){
 					seleccionaLinea(variables.lineaActual[globalLanguage]);
 				}
-				//if(variables.lineaActual){seleccionaLinea(variables.lineaActual, variables.language);}
 				renderGraphic(variables, svg, height, barWidth, statusText);
 				renderLegend(variables, svg, width, height);
 			}); // Botón de avanzar

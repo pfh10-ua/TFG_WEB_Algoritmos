@@ -1,6 +1,6 @@
 const express = require('express');
-//const fetch = require('node-fetch');
 const atob = require('atob');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -118,8 +118,6 @@ app.get('/load-file', async (req, res) => {
         res.status(500).json({ error: 'Error al cargar el fichero.' });
     }
 });
-
-const path = require('path');
 const publico = path.join(__dirname, 'public');
 // __dirname: directorio del fichero que se está ejecutando
 
