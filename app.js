@@ -18,7 +18,7 @@ app.use( (req, res, next) => {
 app.use( (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'GET');
-    res.header("Access-Control-Allow-Headers", "content-type");
+    // res.header("Access-Control-Allow-Headers", "content-type");
     next();
 });
 
@@ -46,7 +46,6 @@ app.get('/load-folder', async (req, res) => {
     try {
         // Construye la URL a GitHub
         const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path_algoritmo}`;
-        console.log('Solicitando a GitHub:', githubUrl);
 
         // Realiza la petición a GitHub
         const response = await fetch(githubUrl, options);
@@ -69,7 +68,6 @@ app.get('/load-folder', async (req, res) => {
         }));
 
         res.json(files);
-        console.log('Archivos cargados:', files);
     } catch (error) {
         console.error('Error al cargar la carpeta:', error);
         res.status(500).json({ error: 'Error al cargar la carpeta.' });
