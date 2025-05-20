@@ -1,18 +1,6 @@
 import { getLoadFile } from './dataLoader.js';
 
-// Variables globales para almacenar los valores de las variables del algoritmo
-let globalVariables = {};
-// Copia de las variables globales para reiniciar el algoritmo
-let copiaGlobalVariables = {};
-// Colores para resaltar las variables en el gráfico obtenidos del archivo JSON
-// let colores = {};
-// // Datos iniciales del gráfico (valores de las barras)
-// let data = [30, 80, 45, 60, 20, 90, 50];
-// let copyData = data.slice(); // Copia de los datos iniciales
-
-/**
- * Función para renderizar el gráfico de barras
- */
+//Función para renderizar el gráfico de barras
 function renderGraphic(variables, svg, height, barWidth, statusText) {
 	// Eliminar las barras previas antes de volver a dibujar
 	svg.selectAll("rect").remove();
@@ -20,13 +8,13 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 
 	// Dibujar las barras
 	svg.selectAll("rect")
-		.data(variables.data) // Asignar los datos a las barras
-		.enter()// Un elemento a cada dato del array
+		.data(variables.data)
+		.enter()
 		.append("rect")
 		.attr("x", (d, idx) => idx * barWidth) // Posición horizontal de cada barra
-		.attr("y", d => height - d) // Posición vertical basada en el valor de la barra
-		.attr("width", barWidth - 2) // Ancho de la barra (con separación)
-		.attr("height", d => d) // Altura de la barra basada en el valor
+		.attr("y", d => height - d) 			// Posición vertical basada en el valor de la barra
+		.attr("width", barWidth - 2) 			// Ancho de la barra (con separación)
+		.attr("height", d => d) 				// Altura de la barra basada en el valor
 		.attr("fill", (d, idx) => {
 			// Extraer los valores de variables.indices en un array
 			const indicesArray = Object.values(variables.indices);
@@ -47,19 +35,18 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 		.data(variables.data)
 		.enter()
 		.append("text")
-		.text(d => d) // Mostrar el valor de la barra
+		.text(d => d) 												// Mostrar el valor de la barra
 		.attr("x", (d, idx) => idx * barWidth + (barWidth - 2) / 2) // Centrar el texto en la barra
-		.attr("y", d => height - d - 5) // Colocar el texto encima de la barra
-		.attr("text-anchor", "middle") // Centrar el texto horizontalmente
-		.attr("font-size", "12px") // Tamaño del texto
-		.attr("fill", "black"); // Color del texto
+		.attr("y", d => height - d - 5) 							// Colocar el texto encima de la barra (Eje Y va de arriba abajo)
+		.attr("text-anchor", "middle") 								// Centrar el texto horizontalmente
+		.attr("font-size", "12px") 									// Tamaño del texto
+		.attr("fill", "black"); 									// Color del texto
 
-	// Actualizar el texto del estado del ordenamiento
 	if (variables.sortedOrFind) {
 		statusText.text("Fin del algoritmo"); // Mostrar mensaje cuando esté ordenado o encontrado
 	} 
 	else {
-		statusText.text(""); // Limpiar el mensaje si no está ordenado
+		statusText.text("");
 	}
 }
 
@@ -67,83 +54,41 @@ function renderLegend(variables, svg, width, height) {
   // Eliminar cualquier grupo de leyenda previo para evitar duplicados
   svg.selectAll(".legend").remove();
 
-  // Obtener las claves de variables.indices, limitando a la cantidad de colores disponibles
-  // Así evitamos mostrar claves sin color asignado (por ejemplo 'key' si no hay color para ella)
+  // Se evita mostrar variables sin color asignado
   const keys = Object.keys(variables.indices).filter((_, i) => i < variables.colors.length);
 
-  // Crear un array con objetos que contienen la etiqueta (clave) y el color correspondiente
   const legendData = keys.map((key, i) => ({
-    label: key,           // Nombre del índice
-    color: variables.colors[i]  // Color asignado al índice según la posición
+    label: key,           
+    color: variables.colors[i]
   }));
 
-  // Crear un grupo SVG para contener la leyenda, y posicionarlo en la esquina superior izquierda
+  // Se crea un grupo SVG para contener la leyenda, y posicionarlo en la esquina superior izquierda
   const legend = svg.append("g")
     .attr("class", "legend")
     .attr("transform", `translate(0, 30)`);
 
-  // Por cada elemento de legendData, crear una fila con rectángulo de color y texto descriptivo
+  // Por cada elemento de legendData, se crea una fila con rectángulo de color y texto descriptivo
   legendData.forEach((d, i) => {
-    // Grupo para cada fila, desplazado verticalmente según su índice para separar filas
-	// Se separan 18 píxeles
     const row = legend.append("g")
       .attr("transform", `translate(0, ${i * 18})`);
 
-    // Añadir un rectángulo pequeño que muestra el color representativo de la clave
+    // Se añade un rectángulo pequeño con el color
     row.append("rect")
-      .attr("width", 12)       // Ancho del rectángulo
-      .attr("height", 12)      // Alto del rectángulo
-      .attr("fill", d.color)   // Color del rectángulo según legendData
-      .attr("stroke", "black")  // Borde negro para que resalte
+      .attr("width", 12)
+      .attr("height", 12)
+      .attr("fill", d.color)
+      .attr("stroke", "black")
       .attr("stroke-width", 1);
 
-    // Añadir el texto con la etiqueta al lado del rectángulo
+    // Se añade la variable al rectángulo que representa el color
     row.append("text")
-      .attr("x", 18)           // Posición horizontal, dejando espacio al rectángulo
-      .attr("y", 10)           // Posición vertical para centrar el texto respecto al rectángulo
-      .text(d.label)           // Texto con el nombre de la variable
-      .attr("font-size", "14px") // Tamaño de la letra
-      .attr("fill", "black");   // Color del texto (negro)
+      .attr("x", 18)
+      .attr("y", 10)
+      .text(d.label)
+      .attr("font-size", "14px")
+      .attr("fill", "black");
   });
 }
-
-/**
- * Función para realizar un paso hacia adelante en el Selection Sort
- */
-// function nextStep() {
-//   if (sorted) return; // Si ya está ordenado, no hacer nada
-
-//   if (globalVariables.i >= data.length - 1) { // Si ya se completaron todas las iteraciones
-// 	sorted = true; // Marcar el arreglo como ordenado
-// 	renderGraphic(); // Actualizar el gráfico
-// 	return;
-//   }
-
-//   // Comparar y actualizar el índice del mínimo
-//   if (data[globalVariables.j] < data[globalVariables.minIndex]) {
-// 	globalVariables.minIndex = globalVariables.j; // Actualizar el índice del mínimo encontrado 
-//   }
-
-//   globalVariables.j++;
-
-//   if (globalVariables.j === data.length) { // Si se completó la iteración interna
-// 	// Intercambiar los elementos data[i] y data[minIndex]
-// 	const temp = data[globalVariables.i];
-// 	data[globalVariables.i] = data[globalVariables.minIndex];
-// 	data[globalVariables.minIndex] = temp;
-
-// 	// Avanzar a la siguiente iteración externa
-// 	//console.log("Antes de finalizar bucle j: i->" + globalVariables.i + " j->" + globalVariables.j + " min->" + globalVariables.minIndex);
-// 	globalVariables.i++;
-// 	globalVariables.j = globalVariables.i + 1;
-// 	globalVariables.minIndex = globalVariables.i;
-// 	//console.log("Despues de finalizar bucle j: i->" + globalVariables.i + " j->" + globalVariables.j + " min->" + globalVariables.minIndex);
-//   }
-
-//   renderGraphic(); // Actualizar el gráfico
-// }
-
-
 
 function insertAsLastChild(padre,nuevoHijo){
 	padre.append(nuevoHijo);
@@ -193,13 +138,16 @@ function mostrarError(){
 	const chartDiv = document.getElementById("chart");
 
 	if (chartDiv) {
-		const message = document.createElement("p"); // Crear un elemento <p>
-		message.textContent = "No existe función para animar gráficamente"; // Establecer el texto
-		chartDiv.appendChild(message); // Añadir el mensaje al div
+		const message = document.createElement("p");
+		message.textContent = "No existe función para animar gráficamente";
+		message.style.textAlign = "center";
+		message.style.width = "100%";
+		message.style.margin = "20px 0";
+		insertAsLastChild(chartDiv, message);
 	}
 }
 
-let globalLanguage = ""; // Variable global para almacenar el lenguaje
+let globalLanguage = ""; // Variable global para almacenar la extensión del fichero actual
 
 function consigueExtension(){
 	const codeElement = document.querySelector("code-git[data-algoritmo]");
@@ -255,20 +203,9 @@ async function init(){
 		algorithmsData = JSON.parse(contenidoString);
 		if (algorithmsData[name]) {
 			const selectedAlgorithm = algorithmsData[name];
-			// Devolver el valor description del algoritmo y la ruta de Github
 			titulo = selectedAlgorithm.title;
 		  	description = selectedAlgorithm.description;
-			path = selectedAlgorithm.pathGithub;
-			
-		  
-		  	// Crear las variables dinámicamente
-		  	// selectedAlgorithm.variables.forEach(variable => {
-			// 	globalVariables[variable.name] = variable.initialValue;
-			// 	copiaGlobalVariables[variable.name] = variable.initialValue;
-			// 	colores[variable.name] = variable.color;
-			// });
-
-		  	
+			path = selectedAlgorithm.pathGithub;	
 		} else {
 			alert("Error: El nombre del algoritmo no existe en el archivo JSON.");
 			return;
@@ -292,28 +229,29 @@ async function init(){
 			const {variables, nextstep} = module.exports; // Extraer las variables y la función de nextStep
 			const copiaVariables = structuredClone(variables); // Copia de las variables de manera superficial
 			// Dimensiones del gráfico
-			const width = 500; // Ancho total del SVG
-			const height = 200; // Alto total del SVG
-			const barWidth = width / variables.data.length; // Ancho de cada barra
+			const width = 500;
+			const height = 200;
+			const barWidth = width / variables.data.length;
 
 			// Crear el contenedor SVG para el gráfico de barras
 			const svg = d3.select("#chart")
 				.append("svg")
-				.attr("width", "100%") // Ancho del SVG
-				.attr("height", height) // Alto del SVG
+				.attr("width", "100%")
+				.attr("height", height)
 				.attr("viewBox", `0 0 ${width} ${height}`)
   				.attr("preserveAspectRatio", "xMidYMid meet");
 
 			// Crear un texto para mostrar el estado del ordenamiento
 			const statusText = d3.select(".animation")
-				.append("p") // Crear un elemento <p> debajo del gráfico
+				.append("p")
 				.style("text-align", "center")
 				.style("font-size", "16px")
 				.style("font-weight", "bold")
-				.text(""); // Inicialmente vacío
-			// Inicializar el gráfico con las barras
+				.text("");
+			// Inicializar el gráfico y la leyenda
 			renderGraphic(variables, svg, height, barWidth, statusText);
 			renderLegend(variables, svg, width, height);
+
 			// Agregar eventos a los botones
 			document.getElementById("nextStep").addEventListener("click", () => {
 				consigueExtension();
@@ -324,15 +262,16 @@ async function init(){
 				}
 				renderGraphic(variables, svg, height, barWidth, statusText);
 				renderLegend(variables, svg, width, height);
-			}); // Botón de avanzar
-			document.getElementById("restart").addEventListener("click", () => { // Botón de reiniciar
+			}); 
+
+			document.getElementById("restart").addEventListener("click", () => { 
 				Object.assign(variables, structuredClone(copiaVariables)); // Restaurar los datos originales completamente
 				consigueExtension();
 				variables.language = globalLanguage;
 				if (variables.lineaActual[globalLanguage]){
 					seleccionaLinea(variables.lineaActual[globalLanguage]);
 				}
-				renderGraphic(variables, svg, height, barWidth, statusText); // Volver a renderizar el gráfico
+				renderGraphic(variables, svg, height, barWidth, statusText);
 				renderLegend(variables, svg, width, height);
 			}); 
 		}
@@ -340,8 +279,6 @@ async function init(){
 			mostrarError();
 		}
 	
-		
-	// Cargar el código del algoritmo
 	renderCódigo(name);
 	}
 }

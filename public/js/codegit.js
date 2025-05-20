@@ -74,20 +74,19 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(element.content.cloneNode(true));
             this.extensionToImage = {};
-            this.directorios = {}; // Donde almacenaremos el JSON cargado
+            this.directorios = {}; // Donde se almacena el JSON cargado
         }
         async connectedCallback() {   
             this.algoritmo = this.hasAttribute('data-algoritmo') ? this.getAttribute('data-algoritmo') : 0;
-            this.extensionToImage = await cargarJsonImg(); // Cargar el JSON al iniciar el componente
+            this.extensionToImage = await cargarJsonImg(); // Se carga el JSON de las imágenes al iniciar el componente
            
         }
         async attributeChangedCallback(name, viejo, nuevo){
             if (name === "data-algoritmo") {
-                //console.log(viejo, nuevo);
                 if (nuevo != viejo){
                     this.algoritmo = nuevo.toLowerCase();
                     try {
-                        // Carga la carpeta
+                        // Comprobación el contenido del JSON almacenado
                         if (Object.keys(this.directorios).length === 0) {
                             const contenidoAlgoritmosJSON = await getLoadFile("", "algoritmos.json");
                             this.directorios = JSON.parse(contenidoAlgoritmosJSON);
@@ -96,14 +95,15 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
                         if (!algoritmoData) {
                             throw new Error(`El algoritmo "${this.algoritmo}" no existe en el JSON.`);
                         }
+                        // Obtención de ficheros almacenados en la carpeta indicada
                         const path = algoritmoData.pathGithub;
                         const contentFolder = await getLoadFolder(path);
-                        // Validar que contentFolder no esté vacío
                         if (!contentFolder || contentFolder.length === 0) {
                             console.error('La carpeta está vacía o no se pudo cargar.');
-                            return; // Terminar la ejecución si no hay contenido
+                            return;
                         }
-                        // Continuar si hay contenido
+                        // Se filtran los ficheros mostrando solamente el contenido
+                        // si su nombre coincide con el nombre del parámetro/algoritmo
                         const archivosCoincidentes = contentFolder.filter(file => file.name.toLowerCase().includes(this.algoritmo.toLowerCase()));
                         const archivo = archivosCoincidentes[0].name;
                         const content = await getLoadFile(path, archivo);
@@ -116,6 +116,7 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
                 }
             }
         }
+        // Escapa <, >, y & para evitar creación de etiquetas HTML no deseadas.
         escapeHtml(texto) {
             return texto.replace(/&/g, '&amp;')
              .replace(/</g, '&lt;')
@@ -124,20 +125,21 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
 
         insertarCodigo(codigo, archivo){
             const code = this.shadowRoot.querySelector('code');
-            const codigoSinEspeciales = this.escapeHtml(codigo); // Escapa caracteres especiales
+            const codigoSinEspeciales = this.escapeHtml(codigo);
             const lineas = codigoSinEspeciales.split('\n');
+            //Añade el número de línea a cada una
             const codigoConDivs = lineas.map((linea, index) =>{
-                 return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); // Añade un div por cada línea
-            code.innerHTML = codigoConDivs; // Cambia el contenido del <code> a HTML
+                 return `<div><span class="numero-linea">${index + 1}|</span> ${linea}</div>`}).join(''); 
+            code.innerHTML = codigoConDivs;
+            // Inserción del nombre del archivo en la parte superior
             const titulo = document.createElement('div');
-            titulo.id = "titulo-archivo"; // Asigna un id al título
-            titulo.textContent = `${archivo}`; // Crea un nuevo div con el nombre del archivo
+            titulo.id = "titulo-archivo";
+            titulo.textContent = `${archivo}`;
             const pre = this.shadowRoot.querySelector('pre');
-            const existingTitle = this.shadowRoot.querySelector('#titulo-archivo'); // Busca el div existente
+            const existingTitle = this.shadowRoot.querySelector('#titulo-archivo');
             if (existingTitle) {
-                pre.removeChild(existingTitle); // Elimina el div existente si lo encuentra
+                pre.removeChild(existingTitle);
             }
-            // Añade el nuevo div al principio del <code>
             pre.insertBefore(titulo, pre.firstChild);
         }
         mostrarImagenes(path, files, nameAlgorithm){
@@ -150,20 +152,21 @@ import { cargarJsonImg, getLoadFolder, getLoadFile } from './dataLoader.js';
                     const extension = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
 
                     if (this.extensionToImage[extension]) {
-                        const { image, language } = this.extensionToImage[extension]; // Extrae imagen y lenguaje
+                        const { image, language } = this.extensionToImage[extension];
                         const div = document.createElement('div');
 
                         const img = document.createElement('img');
                         img.src = image;
                         img.alt = language;
                         img.title = `Ver contenido de ${file.name}`;
-                        img.style.maxWidth = "100px"; // Ajusta tamaño de las imágenes
+                        img.style.maxWidth = "100px";
                         img.style.height = "auto";
-
+                        // Añade el nombre del lenguaje
                         const caption = document.createElement('p');
-                        caption.textContent = language; // Añade el nombre del lenguaje
+                        caption.textContent = language;
 
-                        // Evento para cargar el contenido del archivo al hacer clic
+                        // Evento para cargar el contenido del archivo del lenguaje correspondiente 
+                        // al hacer clic en la imagen
                         img.addEventListener('click', async () => {
                             const content = await getLoadFile(path, file.name);
                             this.insertarCodigo(content, file.name);

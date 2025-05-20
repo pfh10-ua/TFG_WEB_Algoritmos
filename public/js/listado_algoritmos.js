@@ -1,11 +1,10 @@
 import { getLoadFile } from './dataLoader.js';
 
-// Función para cargar y mostrar la lista de algoritmos
+// Función para cargar y mostrar la lista de algoritmos en forma de tarjetas
 async function loadAlgorithms() {
     const algorithmCardsContainer = document.getElementById('algorithm-cards');
 
     try {
-        // Cargar datos del archivo JSON
         const response = await getLoadFile("", "algoritmos.json");
         if (!response) {
             throw new Error('No se pudo cargar la lista de algoritmos.');
@@ -13,7 +12,7 @@ async function loadAlgorithms() {
 
         const algorithmsJSON = JSON.parse(response);//Convertir a JSON
 
-        // Generar tarjetas para cada algoritmo recorriendo el JSON
+        // Generador de tarjetas para cada algoritmo recorriendo el JSON
         Object.entries(algorithmsJSON).forEach(([key, algorithm]) => {
             const complexities = algorithm.complexity;
             const card = document.createElement('div');
@@ -38,18 +37,14 @@ async function loadAlgorithms() {
 }
 
 function filterAlgorithms() {
-    // Obtener el valor del campo de búsqueda y convertirlo a minúsculas
+    // Obtiene el valor del campo de búsqueda y convertirlo a minúsculas
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
-    // Obtener todas las cards
     const cards = document.querySelectorAll('.card');
 
-    // Iterar sobre cada card
     cards.forEach(card => {
-        // Obtener el nombre del algoritmo (atributo data-name) y convertirlo a minúsculas
         const cardName = card.querySelector('h3').textContent.toLowerCase();
 
-        // Verificar si el nombre coincide con el término de búsqueda
+        // Verifica si el nombre incluye el término de búsqueda
         if (cardName.includes(searchTerm)) {
             card.style.display = 'block'; // Mostrar la card si coincide
         } else {
@@ -58,7 +53,6 @@ function filterAlgorithms() {
     });
 }
 
-// Inicializar la página
 document.addEventListener('DOMContentLoaded', () => {
     loadAlgorithms();
     filterAlgorithms();

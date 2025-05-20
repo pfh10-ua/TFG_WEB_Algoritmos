@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// convierte el cuerpo del mensaje de la petición en JSON al objeto de JavaScript req.body:
+// Convierte el cuerpo del mensaje de la petición en JSON al objeto de JavaScript req.body:
 app.use(express.json());
 
 // middleware para descodificar caracteres UTF-8 en la URL:
@@ -18,7 +18,6 @@ app.use( (req, res, next) => {
 app.use( (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'GET');
-    // res.header("Access-Control-Allow-Headers", "content-type");
     next();
 });
 
@@ -38,7 +37,7 @@ const repo = process.env.REPO_NAME;
 app.get('/load-folder', async (req, res) => {
     const { path_algoritmo } = req.query;
 
-    // Validar si se proporcionó el parámetro folder
+    // Validar si se proporcionó la ruta
     if (!path_algoritmo) {
         return res.status(400).json({ error: 'Debe proporcionar una carpeta.' });
     }
