@@ -48,9 +48,13 @@ Debe contener las siguientes variables:
 GITHUB_TOKEN=tu_token_personal
 REPO_OWNER=tu_usuario_github
 REPO_NAME=nombre_del_repositorio
+[PORT=3333]
 ```
 > [!NOTE]
 > El token es necesario al ser el repositorio privado. Además de esta forma se permiten 5000 peticiones/hora peo si no lo estás solamente 60.
+
+> [!NOTE]
+> El puerto es opcional, por defecto será el 4000
 
 > [!CAUTION]
 > Recuerda no subir tu fichero .env

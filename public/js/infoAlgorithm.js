@@ -50,7 +50,8 @@ function renderGraphic(variables, svg, height, barWidth, statusText) {
 	}
 }
 
-function renderLegend(variables, svg, width, height) {
+// Funcion para la creación y la recarga de la leyenda
+function renderLegend(variables, svg) {
   // Eliminar cualquier grupo de leyenda previo para evitar duplicados
   svg.selectAll(".legend").remove();
 
@@ -215,9 +216,9 @@ async function init(){
 		return;
 	}
 		
-	// Agregar la descripción del algoritmo al <main>
+	// Agrega la descripción del algoritmo al <main>
 	addDescriptionToMain(description);
-	// Agregar el título del algoritmo al <main>
+	// Agrega el título del algoritmo al <main>
 	addHeadingToMain(titulo);
 	if (path !== "") {
 		// Cargar el contenido del archivo
@@ -238,8 +239,8 @@ async function init(){
 				.append("svg")
 				.attr("width", "100%")
 				.attr("height", height)
-				.attr("viewBox", `0 0 ${width} ${height}`)
-  				.attr("preserveAspectRatio", "xMidYMid meet");
+				.attr("viewBox", `0 0 ${width} ${height}`) // Para que contenido se escale correctamente al cambiar el tamaño
+  				.attr("preserveAspectRatio", "xMidYMid meet"); // Al redimensionarse, se centra el contenido sin recortar(meet)
 
 			// Crear un texto para mostrar el estado del ordenamiento
 			const statusText = d3.select(".animation")
@@ -250,7 +251,7 @@ async function init(){
 				.text("");
 			// Inicializar el gráfico y la leyenda
 			renderGraphic(variables, svg, height, barWidth, statusText);
-			renderLegend(variables, svg, width, height);
+			renderLegend(variables, svg);
 
 			// Agregar eventos a los botones
 			document.getElementById("nextStep").addEventListener("click", () => {
@@ -261,7 +262,7 @@ async function init(){
 					seleccionaLinea(variables.lineaActual[globalLanguage]);
 				}
 				renderGraphic(variables, svg, height, barWidth, statusText);
-				renderLegend(variables, svg, width, height);
+				renderLegend(variables, svg);
 			}); 
 
 			document.getElementById("restart").addEventListener("click", () => { 
@@ -272,7 +273,7 @@ async function init(){
 					seleccionaLinea(variables.lineaActual[globalLanguage]);
 				}
 				renderGraphic(variables, svg, height, barWidth, statusText);
-				renderLegend(variables, svg, width, height);
+				renderLegend(variables, svg);
 			}); 
 		}
 		else{
