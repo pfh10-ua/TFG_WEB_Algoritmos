@@ -83,7 +83,10 @@ Esto permite cargar las variables de entorno sin usar la libería dotenv.
 ### 1. Crear Carpeta del Algoritmo (si no está creada ya)
 La carpeta se debe crear en el directorio correspondiente y el nombre de la carpeta debe de comenzar con mayúscula.
 
-### 2. Añadir Entrada en `algoritmos.json`
+### 2. Subir Archivos Fuente
+Los nombres de los archivos deben coincidir con el identificador del algoritmo que se estableción en el fichero `algoritmos.json`
+
+### 3. Añadir Entrada en `algoritmos.json`
 La entrada debe ser como el ejemplo siguiente:
 ```json
 "bubblesort": {
@@ -103,10 +106,6 @@ La entrada debe ser como el ejemplo siguiente:
 > - `pathGithub`: Debe coincidir con la ruta del repositorio GitHub donde has alojado los ficheros fuentes del algoritmo.
 > - Cada entrada debe incluir las claves `title`, `description`, `complexity` y `pathGithub`.
 > - Asegúrate de que las claves `best`, `average` y `worst` dentro de `complexity` están correctamente definidas.
-
-### 3. Subir Archivos Fuente
-Los nombres de los archivos deben coincidir con el identificador del algoritmo que se estableción en el fichero `algoritmos.json`
-
 
 ## 📊 Animación del algoritmo.
 Para poder tener animación en el algoritmo, es necesario subir un fichero llamado nextstep.js cuyo contenido podría ser el siguiente en el caso del algoritmo llamado selectionSort:
