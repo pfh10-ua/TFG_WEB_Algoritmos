@@ -53,7 +53,7 @@ function filterAlgorithms() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadAlgorithms();
-    filterAlgorithms();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadAlgorithms();
+    document.getElementById('searchInput').addEventListener('keyup', filterAlgorithms);
 });
